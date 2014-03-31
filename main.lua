@@ -54,8 +54,9 @@ local player = display.newSprite(spriteSheet, sequenceData)
 -- player.x = vW/2
 -- player.y = vH/2
 player:setSequence("3")
-mte.physics.addBody(player, "dynamic", {friction = 0.2, bounce = 0.1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
+mte.physics.addBody(player, "dynamic", {friction = 0.5, bounce = 0.1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
 player.isFixedRotation = false
+player.linearDamping = 3
 
 local setup = {
 	kind = "sprite", 
@@ -71,23 +72,26 @@ mte.addSprite(player, setup)
 mte.setCameraFocus(player)
 player:play()
 
-local physObj = display.newImage( "images/arrowLeft.png" );
-mte.physics.addBody(physObj, "static", { friction=0.5, bounce=0.5 })
-local setup = {
-	kind = "sprite", 
-	layer =  mte.getSpriteLayer(1), 
-	locX = 11, 
-	locY = 3,
-	levelWidth = 120,
-	levelHeight = 120,
-	name = "tree"
-}
-mte.addSprite(physObj, setup)
+-- local physObj = display.newImage( "images/arrowLeft.png" );
+-- mte.physics.addBody(physObj, "static", { friction=0.5, bounce=0.5  })
+-- local setup = {
+-- 	kind = "sprite", 
+-- 	layer =  mte.getSpriteLayer(1), 
+-- 	locX = 11, 
+-- 	locY = 3,
+-- 	levelWidth = 120,
+-- 	levelHeight = 120,
+-- 	name = "tree"
+-- }
+-- mte.addSprite(physObj, setup)
 
 
 local direction = 0
+
+
 local velocityX = 0
-local velocityY = -10
+local velocityY = -2
+local movement = 0
 
 local function move( event )
 
@@ -107,15 +111,29 @@ local function gameLoop( event )
 
 	mte.update()
 
-	player:applyForce(velocityX, velocityY, player.x, player.y)
+	applyForceFromX = math.sin( math.rad(player.rotation) ) * 100
+	applyForceFromY = -math.cos( math.rad(player.rotation) ) * 100
+
+	local vx, vy = player:getLinearVelocity()
+	print( "Linear X velocity = " .. vx .. ",  Linear Y velocity = " .. vy)
+
+	-- if applyForceFromY > 10 then
+	-- 	applyForceFromY = 10
+	-- end
+
+	-- if applyForceFromX > 20 then
+	-- 	applyForceFromX = 20
+	-- end
+
+	player:applyForce(applyForceFromX, applyForceFromY, player.x, player.y)
 	
-	player:applyTorque(movement)
+	player.rotation = player.rotation + movement
 	
 	if direction < 0 then
-		movement = movement + 0.02
+		movement = movement + 0.6
 	end
 	if direction > 0 then
-		movement = movement - 0.02
+		movement = movement - 0.6
 	end
 	if direction == 0 then
 		movement = 0
