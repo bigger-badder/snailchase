@@ -19,6 +19,10 @@ local widthRatio = (vW/1440)
 --LOAD MAP ------------------------------------------------------------
 mte.toggleWorldWrapX(true)
 mte.toggleWorldWrapY(true)
+mte.enableBox2DPhysics()
+mte.physics.start()
+mte.physics.setGravity(0, 0)
+mte.physics.setDrawMode("hybrid")
 mte.loadMap("map.tmx")
 local scale = widthRatio
 mte.setCamera({ locX = 11, locY = 12, scale = scale})
@@ -50,6 +54,8 @@ local player = display.newSprite(spriteSheet, sequenceData)
 -- player.x = vW/2
 -- player.y = vH/2
 player:setSequence("3")
+mte.physics.addBody(player, "dynamic", {friction = 0.2, bounce = 0.1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
+player.isFixedRotation = false
 
 local setup = {
 	kind = "sprite", 
@@ -63,11 +69,25 @@ local setup = {
 
 mte.addSprite(player, setup)
 mte.setCameraFocus(player)
-
 player:play()
 
+local physObj = display.newImage( "images/arrowLeft.png" );
+mte.physics.addBody(physObj, "static", { friction=0.5, bounce=0.5 })
+local setup = {
+	kind = "sprite", 
+	layer =  mte.getSpriteLayer(1), 
+	locX = 11, 
+	locY = 3,
+	levelWidth = 120,
+	levelHeight = 120,
+	name = "tree"
+}
+mte.addSprite(physObj, setup)
+
+
 local direction = 0
-local movement = 0
+local velocityX = 0
+local velocityY = -10
 
 local function move( event )
 
@@ -84,25 +104,24 @@ local function move( event )
 end
 
 local function gameLoop( event )
-	mte.moveSprite( player, movement , -30 )
+
 	mte.update()
+
+	player:applyForce(velocityX, velocityY, player.x, player.y)
+	
+	player:applyTorque(movement)
 	
 	if direction < 0 then
-		movement = movement + 2
+		movement = movement + 0.02
 	end
 	if direction > 0 then
-		movement = movement - 2
+		movement = movement - 0.02
 	end
 	if direction == 0 then
-		if movement < 0 then
-			movement = movement + 0.4
-		end
-		if movement > 0 then
-			movement = movement - 0.4
-		end
+		movement = 0
 	end
 
-	-- collectgarbage("step", 20)
+	collectgarbage("step", 20)
 end
 
 
