@@ -23,7 +23,9 @@ mte.enableBox2DPhysics()
 mte.physics.start()
 mte.physics.setGravity(0, 0)
 mte.physics.setDrawMode("hybrid")
+mte.enableTileFlipAndRotation()
 mte.loadMap("map.tmx")
+mte.drawObjects() 
 local scale = widthRatio
 mte.setCamera({ locX = 11, locY = 12, scale = scale})
 
@@ -54,9 +56,10 @@ local player = display.newSprite(spriteSheet, sequenceData)
 -- player.x = vW/2
 -- player.y = vH/2
 player:setSequence("3")
-mte.physics.addBody(player, "dynamic", {friction = 0.5, bounce = 0.1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
+mte.physics.addBody(player, "dynamic", {friction = 5, bounce = 5, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
 player.isFixedRotation = false
 player.linearDamping = 3
+player.angularDamping = 220
 
 local setup = {
 	kind = "sprite", 

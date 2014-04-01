@@ -2006,6 +2006,10 @@
    <property name="scale" value="1"/>
    <property name="spriteLayer" value="true"/>
   </properties>
-  <object gid="1" x="1220" y="492"/>
+  <object gid="1" x="1176" y="476">
+   <properties>
+    <property name="physics" value="true"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
