@@ -22,7 +22,7 @@ mte.toggleWorldWrapY(true)
 mte.enableBox2DPhysics()
 mte.physics.start()
 mte.physics.setGravity(0, 0)
-mte.physics.setDrawMode("hybrid")
+--mte.physics.setDrawMode("hybrid")
 mte.enableTileFlipAndRotation()
 mte.loadMap("map.tmx")
 mte.drawObjects() 
@@ -34,14 +34,26 @@ mte.setCamera({ locX = 11, locY = 12, scale = scale})
 local buttonRight = display.newImage( "images/arrowRight.png" )
 buttonRight.anchorY = 0.5;
 buttonRight.anchorX = 1;
+buttonRight:scale(0.5, 0.5)
 buttonRight.x = vW - 10
 buttonRight.y = vH/2 
 
 local buttonLeft = display.newImage( "images/arrowLeft.png" )
 buttonLeft.anchorY = 0.5;
 buttonLeft.anchorX = 0;
+buttonLeft:scale(0.5, 0.5)
 buttonLeft.x = display.screenOriginX + 10
 buttonLeft.y = vH/2 
+
+local buttonLeftOverlay = display.newRect(display.screenOriginX, display.screenOriginY, vW / 2, vH)
+buttonLeftOverlay.anchorX = 0;
+buttonLeftOverlay.anchorY = 0;
+buttonLeftOverlay:setFillColor( 0, 0, 0, 0.01)
+
+local buttonRightOverlay = display.newRect(display.screenOriginX + vW / 2, display.screenOriginY, vW / 2, vH)
+buttonRightOverlay.anchorX = 0;
+buttonRightOverlay.anchorY = 0;
+buttonRightOverlay:setFillColor( 0, 0, 0, 0.01 )
 
 
 --CREATE PLAYER SPRITE ------------------------------------------------------------
@@ -56,7 +68,7 @@ local player = display.newSprite(spriteSheet, sequenceData)
 -- player.x = vW/2
 -- player.y = vH/2
 player:setSequence("3")
-mte.physics.addBody(player, "dynamic", {friction = 5, bounce = 5, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
+mte.physics.addBody(player, "dynamic", {friction = 5, radius = 20, bounce = 1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
 player.isFixedRotation = false
 player.linearDamping = 3
 player.angularDamping = 220
@@ -75,77 +87,91 @@ mte.addSprite(player, setup)
 mte.setCameraFocus(player)
 player:play()
 
--- local physObj = display.newImage( "images/arrowLeft.png" );
--- mte.physics.addBody(physObj, "static", { friction=0.5, bounce=0.5  })
--- local setup = {
--- 	kind = "sprite", 
--- 	layer =  mte.getSpriteLayer(1), 
--- 	locX = 11, 
--- 	locY = 3,
--- 	levelWidth = 120,
--- 	levelHeight = 120,
--- 	name = "tree"
--- }
--- mte.addSprite(physObj, setup)
-
 
 local direction = 0
-
-
 local velocityX = 0
 local velocityY = -2
-local movement = 0
+local rotationDiff = 0
 
 local function move( event )
 
+	-- if event.phase == "began" then
+	-- display.currentStage:setFocus(event.target)
+	-- end
+
 	if event.phase == "began" or event.phase == "moved" then
-		if event.target == buttonLeft then
+		if event.target == buttonLeftOverlay then
 			direction = 1
 		end
-		if event.target == buttonRight then
+		if event.target == buttonRightOverlay then
 			direction = -1
 		end
 	elseif event.phase == "ended" or event.phase == "cancelled" then
+		display.currentStage:setFocus(nil)
 		direction = 0
 	end
+
+
+	-- if event.phase == "moved" then
+	
+	-- 	if(event.x < event.target.x - (event.target.width/2) or event.x > event.target.x + (event.target.width/2) ) then
+	-- 		direction = 0
+	-- 	end
+
+	-- 	if(event.y < event.target.y - (event.target.height/2) or event.y > event.target.y + (event.target.height/2) ) then
+	-- 		direction = 0
+	-- 	end
+
+	-- end
+
+
 end
+
+local xForce = 0;
+local yForce = 0;
 
 local function gameLoop( event )
 
 	mte.update()
 
-	applyForceFromX = math.sin( math.rad(player.rotation) ) * 100
-	applyForceFromY = -math.cos( math.rad(player.rotation) ) * 100
+	local isGrass = mte.getTileProperties({ layer = 1, level = 1, locX = player.locX, locY = player.locY })
+	local isRoad  = mte.getTileProperties({ layer = 2, level = 1, locX = player.locX, locY = player.locY })
+
+	local accCoeff = 70
+
+	if isRoad then
+		accCoeff = 100
+	end
+
+	local newForceX = math.sin( math.rad(player.rotation) ) * accCoeff
+	local newForceY = -math.cos( math.rad(player.rotation) ) * accCoeff
+
+	local diffX = newForceX - xForce 
+	xForce = xForce + (diffX / 2)
+	
+	local diffY = newForceY - yForce
+	yForce = yForce + (diffY / 2)
 
 	local vx, vy = player:getLinearVelocity()
-	print( "Linear X velocity = " .. vx .. ",  Linear Y velocity = " .. vy)
 
-	-- if applyForceFromY > 10 then
-	-- 	applyForceFromY = 10
-	-- end
-
-	-- if applyForceFromX > 20 then
-	-- 	applyForceFromX = 20
-	-- end
-
-	player:applyForce(applyForceFromX, applyForceFromY, player.x, player.y)
+	player:applyForce(xForce, yForce, player.x, player.y)
 	
-	player.rotation = player.rotation + movement
+	player.rotation = player.rotation + rotationDiff
 	
 	if direction < 0 then
-		movement = movement + 0.6
+		rotationDiff = 5
 	end
 	if direction > 0 then
-		movement = movement - 0.6
+		rotationDiff = -5
 	end
 	if direction == 0 then
-		movement = 0
+		rotationDiff = 0
 	end
 
 	collectgarbage("step", 20)
 end
 
 
-buttonLeft:addEventListener("touch", move)
-buttonRight:addEventListener("touch", move)
+buttonLeftOverlay:addEventListener("touch", move)
+buttonRightOverlay:addEventListener("touch", move)
 Runtime:addEventListener("enterFrame", gameLoop)
