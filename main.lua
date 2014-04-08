@@ -77,7 +77,7 @@ local setup = {
 	kind = "sprite", 
 	layer =  mte.getSpriteLayer(1), 
 	locX = 11, 
-	locY = 12,
+	locY = 9,
 	levelWidth = 120,
 	levelHeight = 120,
 	name = "player"
@@ -86,6 +86,29 @@ local setup = {
 mte.addSprite(player, setup)
 mte.setCameraFocus(player)
 player:play()
+
+
+
+--CREATE ENEMY SPRITE ------------------------------------------------------------
+local enemy = display.newSprite(spriteSheet, sequenceData)
+enemy:setSequence("1");
+mte.physics.addBody(enemy, "dynamic", {friction = 500, radius = 20, bounce = 0, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
+enemy.isFixedRotation = false
+enemy.linearDamping = 3
+enemy.angularDamping = 600
+-- mte.setCameraFocus(enemy)
+local setup = {
+	kind = "sprite", 
+	layer =  mte.getSpriteLayer(1), 
+	locX = 11, 
+	locY = 12,
+	levelWidth = 120,
+	levelHeight = 120,
+	name = "enemy"
+}
+
+mte.addSprite(enemy, setup)
+enemy:play()
 
 
 local direction = 0
@@ -127,19 +150,41 @@ local function move( event )
 
 end
 
+local function isRoad (locXRef, locYRef)
+
+	local isRoad  = mte.getTileProperties({ layer = 2, level = 1, locX = locXRef, locY = locYRef })
+
+	if isRoad then
+		return true
+	end
+
+	return false
+
+end
+
+
 local xForce = 0;
 local yForce = 0;
+local lastTileX, lastTileY = 0, 0;
 
 local function gameLoop( event )
 
+	-- local currentEnemyX, currentEnemyY = enemy.locX, enemy.locY;
+	-- local canApplyForce = false
+	-- if currentEnemyX ~= lastTileX or currentEnemyY ~= lastTileY then
+	-- 	canApplyForce = true
+	-- 	lastTileX, lastTileY = enemy.locX, enemy.locY
+	-- end
+	canApplyForce = true
+
 	mte.update()
 
+	-- PLAYER MOVEMENT
 	local isGrass = mte.getTileProperties({ layer = 1, level = 1, locX = player.locX, locY = player.locY })
-	local isRoad  = mte.getTileProperties({ layer = 2, level = 1, locX = player.locX, locY = player.locY })
 
 	local accCoeff = 70
 
-	if isRoad then
+	if isRoad(player.locX, player.locY ) then
 		accCoeff = 100
 	end
 
@@ -151,8 +196,6 @@ local function gameLoop( event )
 	
 	local diffY = newForceY - yForce
 	yForce = yForce + (diffY / 2)
-
-	local vx, vy = player:getLinearVelocity()
 
 	player:applyForce(xForce, yForce, player.x, player.y)
 	
@@ -167,6 +210,39 @@ local function gameLoop( event )
 	if direction == 0 then
 		rotationDiff = 0
 	end
+
+
+	-- ENEMY MOVEMENT
+
+	local v1, v2 = enemy:getLinearVelocity()
+
+	local a  = math.atan2( v1, -v2 )
+	a = math.floor(a * (180 / math.pi))
+
+
+	if isRoad(enemy.locX, enemy.locY - 1) and canApplyForce and enemy.dir ~= -180 then
+		--enemy.y = enemy.y - 10;
+		mte.moveSpriteTo({ sprite = enemy, time = 200, locY = enemy.locY -1, locX = enemy.locX })
+		--enemy:applyForce(0, -90, enemy.x, enemy.y)
+		enemy.rotation = enemy.dir
+		enemy.dir = 0
+
+	elseif isRoad(enemy.locX + 1, enemy.locY) and canApplyForce and enemy.dir ~= -90 then
+		--enemy.x = enemy.x + 10;
+		mte.moveSpriteTo({ sprite = enemy, time = 200, locX = enemy.locX + 1, locY = enemy.locY })
+		--enemy:applyForce(90, 0, enemy.x, enemy.y)
+		enemy.rotation = enemy.dir
+		enemy.dir = 90
+
+	elseif isRoad(enemy.locX - 1, enemy.locY) and canApplyForce and enemy.dir ~= 90 then
+		--enemy.x = enemy.x - 10;
+		mte.moveSpriteTo({ sprite = enemy, time = 200, locX = enemy.locX - 1, locY = enemy.locY })
+		--enemy:applyForce(-90, 0, enemy.x, enemy.y)
+		enemy.rotation = enemy.dir
+		enemy.dir = -90
+
+	end
+
 
 	collectgarbage("step", 20)
 end
