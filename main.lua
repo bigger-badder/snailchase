@@ -9,6 +9,11 @@ display.setStatusBar( display.HiddenStatusBar )
 
 -- Libraries
 local mte = require("lib.mte").createMTE()
+local _ = require 'underscore'
+require("pprint")
+local Grid = require ("jumper.grid") -- The grid class
+local Pathfinder = require ("jumper.pathfinder") -- The pathfinder lass
+
 
 -- View Settings
 local vW = display.viewableContentWidth
@@ -17,17 +22,49 @@ local widthRatio = (vW/1440)
 
 
 --LOAD MAP ------------------------------------------------------------
-mte.toggleWorldWrapX(true)
-mte.toggleWorldWrapY(true)
+--mte.toggleWorldWrapX(true)
+--mte.toggleWorldWrapY(true)
 mte.enableBox2DPhysics()
 mte.physics.start()
 mte.physics.setGravity(0, 0)
 --mte.physics.setDrawMode("hybrid")
-mte.enableTileFlipAndRotation()
 mte.loadMap("map.tmx")
 mte.drawObjects() 
 local scale = widthRatio
 mte.setCamera({ locX = 11, locY = 12, scale = scale})
+
+
+-- CREATE PATHFINDER ARRAY ------------------------------------------------------------
+local layer = 3
+local mapWidth = mte.getMap().width;
+local mapHeight = mte.getMap().height;
+local mapData = {};
+
+for i=1, mapHeight do
+	
+	mapDataRow = {}
+
+	for j=1, mapHeight do
+		
+		local isObstical  = mte.getTileProperties({ layer = 3, level = 1, locX = j, locY = i })
+
+		if isObstical then
+			table.insert(mapDataRow, 0)
+		else
+			table.insert(mapDataRow, 1)
+		end
+
+	end 
+
+	table.insert(mapData, mapDataRow)
+
+end
+
+pprint("mapData", mapData)
+
+--local properties = mte.getTileProperties({locX = 1, locY = 1})
+--print(properties[layer].myProperty)
+
 
 
 -- SET CONTROL BUTTONS ------------------------------------------------------------
@@ -214,34 +251,70 @@ local function gameLoop( event )
 
 	-- ENEMY MOVEMENT
 
-	local v1, v2 = enemy:getLinearVelocity()
+	--local path = pathfinder.pathFind(mapData, mapWidth, mapHeight, enemy.locX, enemy.locY, player.locX, player.locY)
+	--print("here");
+	--pprint("enemy path", path)
+	--mte.moveSpriteTo({ sprite = enemy, time = 500, locY = enemy.locY + path[0].dy, locX = enemy.locX + path[0].dx })
 
-	local a  = math.atan2( v1, -v2 )
-	a = math.floor(a * (180 / math.pi))
+ local function walkable(value)
+   return value > 0
+ end
+
+	-- Creates a grid object
+	local grid = Grid(mapData) 
+	-- Creates a pathfinder object using Jump Point Search
+	local myFinder = Pathfinder(grid, 'ASTAR', walkable) 
+
+	-- Define start and goal locations coordinates
+	local startx, starty = enemy.locX, enemy.locY
+	local endx, endy = player.locX, player.locY
+
+	-- Calculates the path, and its length
+	local path = myFinder:getPath(startx, starty, endx, endy)
+	
+	if path then   
+  		
+		print(path:nodes());
+
+  		--print(('Path found! Length: %.2f'):format(path:getLength()))
+		
 
 
-	if isRoad(enemy.locX, enemy.locY - 1) and canApplyForce and enemy.dir ~= -180 then
-		--enemy.y = enemy.y - 10;
-		mte.moveSpriteTo({ sprite = enemy, time = 200, locY = enemy.locY -1, locX = enemy.locX })
-		--enemy:applyForce(0, -90, enemy.x, enemy.y)
-		enemy.rotation = enemy.dir
-		enemy.dir = 0
-
-	elseif isRoad(enemy.locX + 1, enemy.locY) and canApplyForce and enemy.dir ~= -90 then
-		--enemy.x = enemy.x + 10;
-		mte.moveSpriteTo({ sprite = enemy, time = 200, locX = enemy.locX + 1, locY = enemy.locY })
-		--enemy:applyForce(90, 0, enemy.x, enemy.y)
-		enemy.rotation = enemy.dir
-		enemy.dir = 90
-
-	elseif isRoad(enemy.locX - 1, enemy.locY) and canApplyForce and enemy.dir ~= 90 then
-		--enemy.x = enemy.x - 10;
-		mte.moveSpriteTo({ sprite = enemy, time = 200, locX = enemy.locX - 1, locY = enemy.locY })
-		--enemy:applyForce(-90, 0, enemy.x, enemy.y)
-		enemy.rotation = enemy.dir
-		enemy.dir = -90
-
+		--for node, count in path:nodes() do
+	  	--	print(('Step: %d - x: %d - y: %d'):format(count, node:getX(), node:getY()))
+		--end
 	end
+	
+
+
+	-- local v1, v2 = enemy:getLinearVelocity()
+
+	-- local a  = math.atan2( v1, -v2 )
+	-- a = math.floor(a * (180 / math.pi))
+
+
+	-- if isRoad(enemy.locX, enemy.locY - 1) and canApplyForce and enemy.dir ~= -180 then
+	-- 	--enemy.y = enemy.y - 10;
+	-- 	mte.moveSpriteTo({ sprite = enemy, time = 200, locY = enemy.locY -1, locX = enemy.locX })
+	-- 	--enemy:applyForce(0, -90, enemy.x, enemy.y)
+	-- 	enemy.rotation = enemy.dir
+	-- 	enemy.dir = 0
+
+	-- elseif isRoad(enemy.locX + 1, enemy.locY) and canApplyForce and enemy.dir ~= -90 then
+	-- 	--enemy.x = enemy.x + 10;
+	-- 	mte.moveSpriteTo({ sprite = enemy, time = 200, locX = enemy.locX + 1, locY = enemy.locY })
+	-- 	--enemy:applyForce(90, 0, enemy.x, enemy.y)
+	-- 	enemy.rotation = enemy.dir
+	-- 	enemy.dir = 90
+
+	-- elseif isRoad(enemy.locX - 1, enemy.locY) and canApplyForce and enemy.dir ~= 90 then
+	-- 	--enemy.x = enemy.x - 10;
+	-- 	mte.moveSpriteTo({ sprite = enemy, time = 200, locX = enemy.locX - 1, locY = enemy.locY })
+	-- 	--enemy:applyForce(-90, 0, enemy.x, enemy.y)
+	-- 	enemy.rotation = enemy.dir
+	-- 	enemy.dir = -90
+
+	-- end
 
 
 	collectgarbage("step", 20)
