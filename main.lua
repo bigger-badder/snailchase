@@ -22,8 +22,8 @@ local widthRatio = (vW/1440)
 
 
 --LOAD MAP ------------------------------------------------------------
---mte.toggleWorldWrapX(true)
---mte.toggleWorldWrapY(true)
+mte.toggleWorldWrapX(true)
+mte.toggleWorldWrapY(true)
 mte.enableBox2DPhysics()
 mte.physics.start()
 mte.physics.setGravity(0, 0)
@@ -46,9 +46,9 @@ for i=1, mapHeight do
 
 	for j=1, mapHeight do
 		
-		local isObstical  = mte.getTileProperties({ layer = 3, level = 1, locX = j, locY = i })
+		local isObstacle  = mte.getTileProperties({ layer = 3, level = 1, locX = j, locY = i })
 
-		if isObstical then
+		if isObstacle then
 			table.insert(mapDataRow, 0)
 		else
 			table.insert(mapDataRow, 1)
@@ -199,10 +199,18 @@ local function isRoad (locXRef, locYRef)
 
 end
 
-
+local iteration = 0
 local xForce = 0;
 local yForce = 0;
 local lastTileX, lastTileY = 0, 0;
+
+local function walkable(value)
+  return value > 0
+end
+-- Creates a grid object
+local grid = Grid(mapData) 
+-- Creates a pathfinder object using Jump Point Search
+local myFinder = Pathfinder(grid, 'JPS', 1)
 
 local function gameLoop( event )
 
@@ -225,7 +233,7 @@ local function gameLoop( event )
 		accCoeff = 100
 	end
 
-	local newForceX = math.sin( math.rad(player.rotation) ) * accCoeff
+	local newForceX =  math.sin( math.rad(player.rotation) ) * accCoeff
 	local newForceY = -math.cos( math.rad(player.rotation) ) * accCoeff
 
 	local diffX = newForceX - xForce 
@@ -256,36 +264,18 @@ local function gameLoop( event )
 	--pprint("enemy path", path)
 	--mte.moveSpriteTo({ sprite = enemy, time = 500, locY = enemy.locY + path[0].dy, locX = enemy.locX + path[0].dx })
 
- local function walkable(value)
-   return value > 0
- end
-
-	-- Creates a grid object
-	local grid = Grid(mapData) 
-	-- Creates a pathfinder object using Jump Point Search
-	local myFinder = Pathfinder(grid, 'ASTAR', walkable) 
-
 	-- Define start and goal locations coordinates
 	local startx, starty = enemy.locX, enemy.locY
 	local endx, endy = player.locX, player.locY
 
 	-- Calculates the path, and its length
 	local path = myFinder:getPath(startx, starty, endx, endy)
-	
-	if path then   
-  		
-		print(path:nodes());
-
-  		--print(('Path found! Length: %.2f'):format(path:getLength()))
-		
-
-
-		--for node, count in path:nodes() do
-	  	--	print(('Step: %d - x: %d - y: %d'):format(count, node:getX(), node:getY()))
-		--end
+	if path then
+  	for node, count in path:nodes() do
+  		print(('moving enemy to (%d,%d)'):format(node:getX(), node:getY()))
+  		mte.moveSpriteTo({ sprite = enemy, time = 1000 / 30, locX = node:getX(), locY = node:getY() })
+		end
 	end
-	
-
 
 	-- local v1, v2 = enemy:getLinearVelocity()
 
