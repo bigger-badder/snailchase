@@ -49,9 +49,9 @@ for i=1, mapHeight do
 		local isObstical  = mte.getTileProperties({ layer = 3, level = 1, locX = j, locY = i })
 
 		if isObstical then
-			table.insert(mapDataRow, 0)
-		else
 			table.insert(mapDataRow, 1)
+		else
+			table.insert(mapDataRow, 0)
 		end
 
 	end 
@@ -256,14 +256,11 @@ local function gameLoop( event )
 	--pprint("enemy path", path)
 	--mte.moveSpriteTo({ sprite = enemy, time = 500, locY = enemy.locY + path[0].dy, locX = enemy.locX + path[0].dx })
 
- local function walkable(value)
-   return value > 0
- end
 
 	-- Creates a grid object
 	local grid = Grid(mapData) 
 	-- Creates a pathfinder object using Jump Point Search
-	local myFinder = Pathfinder(grid, 'ASTAR', walkable) 
+	local myFinder = Pathfinder(grid, 'JPS', 0) 
 
 	-- Define start and goal locations coordinates
 	local startx, starty = enemy.locX, enemy.locY
@@ -274,18 +271,22 @@ local function gameLoop( event )
 	
 	if path then   
   		
-		print(path:nodes());
+		--print(path:nodes());
 
   		--print(('Path found! Length: %.2f'):format(path:getLength()))
 		
 
 
-		--for node, count in path:nodes() do
-	  	--	print(('Step: %d - x: %d - y: %d'):format(count, node:getX(), node:getY()))
-		--end
+		for node, count in path:nodes() do
+			if count == 2 then
+				print("in here")
+				print(node:getY(), node:getX())
+				mte.moveSpriteTo({ sprite = enemy, time = 500, locY = node:getY(), locX = node:getX() })
+			end
+			print(('Step: %d - x: %d - y: %d'):format(count, node:getX(), node:getY()))
+		end
 	end
 	
-
 
 	-- local v1, v2 = enemy:getLinearVelocity()
 
