@@ -129,8 +129,8 @@ local setup = {
 	layer =  mte.getSpriteLayer(1), 
 	locX = 11, 
 	locY = 9,
-	levelWidth = 120,
-	levelHeight = 120,
+	levelWidth = 400,
+	levelHeight = 550,
 	name = "player"
 }
 
