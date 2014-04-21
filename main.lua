@@ -22,8 +22,8 @@ local widthRatio = (vW/1440)
 
 
 --LOAD MAP ------------------------------------------------------------
---mte.toggleWorldWrapX(true)
---mte.toggleWorldWrapY(true)
+mte.toggleWorldWrapX(true)
+mte.toggleWorldWrapY(true)
 mte.enableBox2DPhysics()
 mte.physics.start()
 mte.physics.setGravity(0, 0)
@@ -44,7 +44,7 @@ for i=1, mapHeight do
 	
 	mapDataRow = {}
 
-	for j=1, mapHeight do
+	for j=1, mapWidth do
 		
 		local isObstical  = mte.getTileProperties({ layer = 3, level = 1, locX = j, locY = i })
 
