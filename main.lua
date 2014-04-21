@@ -102,17 +102,23 @@ buttonRightOverlay:setFillColor( 0, 0, 0, 0.01 )
 
 
 --CREATE PLAYER SPRITE ------------------------------------------------------------
-local spriteSheet = graphics.newImageSheet("spriteSheet.png", {width = 32, height = 32, numFrames = 96})
-local sequenceData = {		
-		{name = "1", sheet = spriteSheet, frames = {85, 86}, time = 500, loopCount = 0},
-		{name = "2", sheet = spriteSheet, frames = {73, 74}, time = 500, loopCount = 0},
-		{name = "3", sheet = spriteSheet, frames = {49, 50}, time = 500, loopCount = 0},
-		{name = "4", sheet = spriteSheet, frames = {61, 62}, time = 500, loopCount = 0}
-		}
-local player = display.newSprite(spriteSheet, sequenceData)
+
+local sheetInfo = require("oldlady")
+local myImageSheet = graphics.newImageSheet( "oldlady.png", sheetInfo:getSheet() )
+local player = display.newSprite( myImageSheet , {frames={1,2,3,4,5,6,7,8,9,10,11,12,13,14}} )
+
+
+--local spriteSheet = graphics.newImageSheet("spriteSheet.png", {width = 32, height = 32, numFrames = 96})
+--local sequenceData = {		
+		--{name = "1", sheet = spriteSheet, frames = {85, 86}, time = 500, loopCount = 0},
+		--{name = "2", sheet = spriteSheet, frames = {73, 74}, time = 500, loopCount = 0},
+		--{name = "3", sheet = spriteSheet, frames = {49, 50}, time = 500, loopCount = 0},
+		--{name = "4", sheet = spriteSheet, frames = {61, 62}, time = 500, loopCount = 0}
+		--}
+--local player = display.newSprite(spriteSheet, sequenceData)
 -- player.x = vW/2
 -- player.y = vH/2
-player:setSequence("3")
+--player:setSequence("3")
 mte.physics.addBody(player, "dynamic", {friction = 5, radius = 20, bounce = 1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
 player.isFixedRotation = false
 player.linearDamping = 3
@@ -135,7 +141,7 @@ player:play()
 
 
 --CREATE ENEMY SPRITE ------------------------------------------------------------
-local enemy = display.newSprite(spriteSheet, sequenceData)
+local enemy = display.newSprite( myImageSheet , {frames={1,2,3,4,5,6,7,8,9,10,11,12,13,14}} )
 enemy:setSequence("1");
 mte.physics.addBody(enemy, "dynamic", {friction = 500, radius = 20, bounce = 0, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
 enemy.isFixedRotation = false
