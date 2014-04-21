@@ -60,7 +60,7 @@ mte.physics.setGravity(0, 0)
 mte.loadMap("map.tmx")
 mte.drawObjects() 
 local scale = widthRatio
-mte.setCamera({ locX = 11, locY = 12, scale = scale})
+mte.setCamera({ locX = 10, locY = 39, scale = scale})
 
 -- CREATE PATHFINDER ARRAY ------------------------------------------------------------
 local layer = 3
@@ -127,8 +127,8 @@ player.angularDamping = 220
 local setup = {
 	kind = "sprite", 
 	layer =  mte.getSpriteLayer(1), 
-	locX = 11, 
-	locY = 9,
+	locX = 10, 
+	locY = 39,
 	levelWidth = 120,
 	levelHeight = 120,
 	name = "player"
@@ -152,7 +152,7 @@ local setup = {
 	kind = "sprite", 
 	layer =  mte.getSpriteLayer(1), 
 	locX = 11, 
-	locY = 12,
+	locY = 43,
 	levelWidth = 120,
 	levelHeight = 120,
 	name = "enemy"
