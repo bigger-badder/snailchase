@@ -9,6 +9,7 @@ display.setStatusBar( display.HiddenStatusBar )
 
 -- Libraries
 local mte = require("lib.mte").createMTE()
+local TextCandy = require("lib.lib_text_candy")
 local _ = require 'underscore'
 require("pprint")
 local Grid = require ("jumper.grid") -- The grid class
@@ -18,8 +19,36 @@ local Pathfinder = require ("jumper.pathfinder") -- The pathfinder lass
 -- View Settings
 local vW = display.viewableContentWidth
 local vH = display.viewableContentHeight
-local widthRatio = (vW/1440) 
+local widthRatio = (vW / 1440) 
 
+-- Score
+local scoreText
+
+function ScoreCreate()
+	-- LOAD & ADD A CHARSET
+	TextCandy.AddCharset ("DIGITS", "digits", "digits.png", "1234567890.m", 40)
+
+	-- CREATE A TEXT OBJECT USING THIS CHARSET
+	scoreText = TextCandy.CreateText({
+		fontName     = "DIGITS", 						
+		x            = vW / 2,						
+		y            = vH - 100,
+		text         = "0.0m",	
+		originX      = "CENTER",							
+		originY      = "TOP",							
+		textFlow     = "CENTER",
+		charSpacing  = 0,
+		lineSpacing  = 0,
+		wrapWidth    = 400, 			
+		charBaseLine = "BOTTOM",
+		showOrigin 	 = false						
+		})
+	scoreText:setColor(0.99, 0.84, 0.16)
+end
+
+function ScoreOnEnterFrame(score)
+	scoreText:setText(score)
+end
 
 --LOAD MAP ------------------------------------------------------------
 mte.toggleWorldWrapX(true)
@@ -32,7 +61,6 @@ mte.loadMap("map.tmx")
 mte.drawObjects() 
 local scale = widthRatio
 mte.setCamera({ locX = 11, locY = 12, scale = scale})
-
 
 -- CREATE PATHFINDER ARRAY ------------------------------------------------------------
 local layer = 3
@@ -61,26 +89,6 @@ for i=1, mapHeight do
 end
 
 pprint("mapData", mapData)
-
---local properties = mte.getTileProperties({locX = 1, locY = 1})
---print(properties[layer].myProperty)
-
-
-
--- SET CONTROL BUTTONS ------------------------------------------------------------
-local buttonRight = display.newImage( "images/arrowRight.png" )
-buttonRight.anchorY = 0.5;
-buttonRight.anchorX = 1;
-buttonRight:scale(0.5, 0.5)
-buttonRight.x = vW - 10
-buttonRight.y = vH/2 
-
-local buttonLeft = display.newImage( "images/arrowLeft.png" )
-buttonLeft.anchorY = 0.5;
-buttonLeft.anchorX = 0;
-buttonLeft:scale(0.5, 0.5)
-buttonLeft.x = display.screenOriginX + 10
-buttonLeft.y = vH/2 
 
 local buttonLeftOverlay = display.newRect(display.screenOriginX, display.screenOriginY, vW / 2, vH)
 buttonLeftOverlay.anchorX = 0;
@@ -204,6 +212,9 @@ local xForce = 0;
 local yForce = 0;
 local lastTileX, lastTileY = 0, 0;
 
+ScoreCreate()
+local score = 0
+
 local function gameLoop( event )
 
 	-- local currentEnemyX, currentEnemyY = enemy.locX, enemy.locY;
@@ -214,6 +225,12 @@ local function gameLoop( event )
 	-- end
 	canApplyForce = true
 
+	if lastTileY ~= player.locY then
+		score = score + 1
+		lastTileY = player.locY
+	end
+
+	ScoreOnEnterFrame(score .. 'm')
 	mte.update()
 
 	-- PLAYER MOVEMENT
