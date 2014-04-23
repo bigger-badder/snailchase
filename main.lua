@@ -143,10 +143,10 @@ player:play()
 --CREATE ENEMY SPRITE ------------------------------------------------------------
 local enemy = display.newSprite( myImageSheet , {frames={1,2,3,4,5,6,7,8,9,10,11,12,13,14}} )
 enemy:setSequence("1");
-mte.physics.addBody(enemy, "dynamic", {friction = 500, radius = 20, bounce = 0, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
+-- mte.physics.addBody(enemy, "dynamic", {friction = 500, radius = 20, bounce = 0, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
 enemy.isFixedRotation = false
-enemy.linearDamping = 3
-enemy.angularDamping = 600
+-- enemy.linearDamping = 3
+-- enemy.angularDamping = 600
 -- mte.setCameraFocus(enemy)
 local setup = {
 	kind = "sprite", 
@@ -223,14 +223,6 @@ local score = 0
 
 local function gameLoop( event )
 
-	-- local currentEnemyX, currentEnemyY = enemy.locX, enemy.locY;
-	-- local canApplyForce = false
-	-- if currentEnemyX ~= lastTileX or currentEnemyY ~= lastTileY then
-	-- 	canApplyForce = true
-	-- 	lastTileX, lastTileY = enemy.locX, enemy.locY
-	-- end
-	canApplyForce = true
-
 	if lastTileY ~= player.locY then
 		score = score + 1
 		lastTileY = player.locY
@@ -274,76 +266,25 @@ local function gameLoop( event )
 
 	-- ENEMY MOVEMENT
 
-	--local path = pathfinder.pathFind(mapData, mapWidth, mapHeight, enemy.locX, enemy.locY, player.locX, player.locY)
-	--print("here");
-	--pprint("enemy path", path)
-	--mte.moveSpriteTo({ sprite = enemy, time = 500, locY = enemy.locY + path[0].dy, locX = enemy.locX + path[0].dx })
+	enemy.y = enemy.y - 17
 
-
-	-- Creates a grid object
-	local grid = Grid(mapData) 
-	-- Creates a pathfinder object using Jump Point Search
-	local myFinder = Pathfinder(grid, 'JPS', 0) 
-
-	-- Define start and goal locations coordinates
-	local startx, starty = enemy.locX, enemy.locY
-	local endx, endy = player.locX, player.locY
-
-	-- Calculates the path, and its length
-	local path = myFinder:getPath(startx, starty, endx, endy)
-	
-	if path then   
-  		
-		--print(path:nodes());
-
-  		--print(('Path found! Length: %.2f'):format(path:getLength()))
-		
-
-
-		for node, count in path:nodes() do
-			if count == 2 then
-				print("in here")
-				print(node:getY(), node:getX())
-				mte.moveSpriteTo({ sprite = enemy, time = 500, locY = node:getY(), locX = node:getX() })
-			end
-			print(('Step: %d - x: %d - y: %d'):format(count, node:getX(), node:getY()))
-		end
+	if player.y >= enemy.y then
+		gameover()
 	end
+
+	local xDist = player.x - enemy.x
+	enemy.x = enemy.x + xDist * 1.1
 	
-
-	-- local v1, v2 = enemy:getLinearVelocity()
-
-	-- local a  = math.atan2( v1, -v2 )
-	-- a = math.floor(a * (180 / math.pi))
-
-
-	-- if isRoad(enemy.locX, enemy.locY - 1) and canApplyForce and enemy.dir ~= -180 then
-	-- 	--enemy.y = enemy.y - 10;
-	-- 	mte.moveSpriteTo({ sprite = enemy, time = 200, locY = enemy.locY -1, locX = enemy.locX })
-	-- 	--enemy:applyForce(0, -90, enemy.x, enemy.y)
-	-- 	enemy.rotation = enemy.dir
-	-- 	enemy.dir = 0
-
-	-- elseif isRoad(enemy.locX + 1, enemy.locY) and canApplyForce and enemy.dir ~= -90 then
-	-- 	--enemy.x = enemy.x + 10;
-	-- 	mte.moveSpriteTo({ sprite = enemy, time = 200, locX = enemy.locX + 1, locY = enemy.locY })
-	-- 	--enemy:applyForce(90, 0, enemy.x, enemy.y)
-	-- 	enemy.rotation = enemy.dir
-	-- 	enemy.dir = 90
-
-	-- elseif isRoad(enemy.locX - 1, enemy.locY) and canApplyForce and enemy.dir ~= 90 then
-	-- 	--enemy.x = enemy.x - 10;
-	-- 	mte.moveSpriteTo({ sprite = enemy, time = 200, locX = enemy.locX - 1, locY = enemy.locY })
-	-- 	--enemy:applyForce(-90, 0, enemy.x, enemy.y)
-	-- 	enemy.rotation = enemy.dir
-	-- 	enemy.dir = -90
-
-	-- end
-
-
 	collectgarbage("step", 20)
 end
 
+
+function gameover()
+	print('Game Over!')
+	enemy:pause()
+	player:pause()
+	Runtime:removeEventListener("enterFrame", gameLoop)
+end
 
 buttonLeftOverlay:addEventListener("touch", move)
 buttonRightOverlay:addEventListener("touch", move)
