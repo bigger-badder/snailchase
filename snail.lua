@@ -1,7 +1,7 @@
 --
 -- created with TexturePacker (http://www.codeandweb.com/texturepacker)
 --
--- $TexturePacker:SmartUpdate:afceff24826416d962724706739b0c88:dbf2c6fe5bd9875749c5f04f861ebbf7:60afeb45eedbfc4d0e7dd547290316ac$
+-- $TexturePacker:SmartUpdate:00cc524dd5f5221ae6b709334d63a3b0:95a2d670498429630b9e6393f86657c3:60afeb45eedbfc4d0e7dd547290316ac$
 --
 -- local sheetInfo = require("mysheet")
 -- local myImageSheet = graphics.newImageSheet( "mysheet.png", sheetInfo:getSheet() )
@@ -16,7 +16,7 @@ SheetInfo.sheet =
     
         {
             -- snail/0000
-            x=1046,
+            x=1162,
             y=2,
             width=114,
             height=240,
@@ -28,7 +28,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0001
-            x=930,
+            x=1046,
             y=2,
             width=114,
             height=240,
@@ -40,8 +40,8 @@ SheetInfo.sheet =
         },
         {
             -- snail/0002
-            x=930,
-            y=244,
+            x=1278,
+            y=2,
             width=114,
             height=238,
 
@@ -52,8 +52,8 @@ SheetInfo.sheet =
         },
         {
             -- snail/0003
-            x=234,
-            y=246,
+            x=1510,
+            y=2,
             width=114,
             height=236,
 
@@ -64,8 +64,8 @@ SheetInfo.sheet =
         },
         {
             -- snail/0004
-            x=118,
-            y=246,
+            x=1394,
+            y=240,
             width=114,
             height=236,
 
@@ -76,7 +76,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0005
-            x=814,
+            x=1162,
             y=244,
             width=114,
             height=238,
@@ -88,7 +88,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0006
-            x=814,
+            x=930,
             y=2,
             width=114,
             height=240,
@@ -112,7 +112,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0008
-            x=698,
+            x=814,
             y=2,
             width=114,
             height=240,
@@ -136,7 +136,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0010
-            x=582,
+            x=698,
             y=2,
             width=114,
             height=240,
@@ -148,7 +148,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0011
-            x=698,
+            x=1046,
             y=244,
             width=114,
             height=238,
@@ -160,7 +160,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0012
-            x=582,
+            x=930,
             y=244,
             width=114,
             height=238,
@@ -172,7 +172,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0013
-            x=466,
+            x=814,
             y=244,
             width=114,
             height=238,
@@ -184,8 +184,8 @@ SheetInfo.sheet =
         },
         {
             -- snail/0014
-            x=2,
-            y=246,
+            x=1394,
+            y=2,
             width=114,
             height=236,
 
@@ -196,7 +196,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0015
-            x=350,
+            x=698,
             y=244,
             width=114,
             height=238,
@@ -208,7 +208,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0016
-            x=466,
+            x=582,
             y=2,
             width=114,
             height=240,
@@ -220,7 +220,7 @@ SheetInfo.sheet =
         },
         {
             -- snail/0017
-            x=350,
+            x=466,
             y=2,
             width=114,
             height=240,
@@ -244,6 +244,30 @@ SheetInfo.sheet =
         },
         {
             -- snail/0019
+            x=1162,
+            y=2,
+            width=114,
+            height=240,
+
+            sourceX = 200,
+            sourceY = 91,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0020
+            x=1162,
+            y=2,
+            width=114,
+            height=240,
+
+            sourceX = 200,
+            sourceY = 91,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0021
             x=1046,
             y=2,
             width=114,
@@ -254,9 +278,225 @@ SheetInfo.sheet =
             sourceWidth = 550,
             sourceHeight = 400
         },
+        {
+            -- snail/0022
+            x=1278,
+            y=2,
+            width=114,
+            height=238,
+
+            sourceX = 200,
+            sourceY = 93,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0023
+            x=1510,
+            y=2,
+            width=114,
+            height=236,
+
+            sourceX = 200,
+            sourceY = 94,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0024
+            x=1394,
+            y=240,
+            width=114,
+            height=236,
+
+            sourceX = 200,
+            sourceY = 94,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0025
+            x=1162,
+            y=244,
+            width=114,
+            height=238,
+
+            sourceX = 200,
+            sourceY = 93,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0026
+            x=930,
+            y=2,
+            width=114,
+            height=240,
+
+            sourceX = 200,
+            sourceY = 91,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0027
+            x=234,
+            y=2,
+            width=114,
+            height=242,
+
+            sourceX = 200,
+            sourceY = 90,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0028
+            x=814,
+            y=2,
+            width=114,
+            height=240,
+
+            sourceX = 200,
+            sourceY = 91,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0029
+            x=118,
+            y=2,
+            width=114,
+            height=242,
+
+            sourceX = 200,
+            sourceY = 90,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0030
+            x=350,
+            y=2,
+            width=114,
+            height=240,
+
+            sourceX = 200,
+            sourceY = 92,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0031
+            x=582,
+            y=244,
+            width=114,
+            height=238,
+
+            sourceX = 200,
+            sourceY = 93,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0032
+            x=1278,
+            y=242,
+            width=114,
+            height=236,
+
+            sourceX = 199,
+            sourceY = 95,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0033
+            x=234,
+            y=246,
+            width=114,
+            height=236,
+
+            sourceX = 199,
+            sourceY = 95,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0034
+            x=1626,
+            y=238,
+            width=114,
+            height=234,
+
+            sourceX = 199,
+            sourceY = 96,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0035
+            x=1626,
+            y=2,
+            width=114,
+            height=234,
+
+            sourceX = 199,
+            sourceY = 97,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0036
+            x=118,
+            y=246,
+            width=114,
+            height=236,
+
+            sourceX = 199,
+            sourceY = 96,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0037
+            x=2,
+            y=246,
+            width=114,
+            height=236,
+
+            sourceX = 199,
+            sourceY = 95,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0038
+            x=466,
+            y=244,
+            width=114,
+            height=238,
+
+            sourceX = 199,
+            sourceY = 94,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
+        {
+            -- snail/0039
+            x=350,
+            y=244,
+            width=114,
+            height=238,
+
+            sourceX = 199,
+            sourceY = 93,
+            sourceWidth = 550,
+            sourceHeight = 400
+        },
     },
     
-    sheetContentWidth = 1162,
+    sheetContentWidth = 1742,
     sheetContentHeight = 484
 }
 
@@ -283,6 +523,26 @@ SheetInfo.frameIndex =
     ["snail/0017"] = 18,
     ["snail/0018"] = 19,
     ["snail/0019"] = 20,
+    ["snail/0020"] = 21,
+    ["snail/0021"] = 22,
+    ["snail/0022"] = 23,
+    ["snail/0023"] = 24,
+    ["snail/0024"] = 25,
+    ["snail/0025"] = 26,
+    ["snail/0026"] = 27,
+    ["snail/0027"] = 28,
+    ["snail/0028"] = 29,
+    ["snail/0029"] = 30,
+    ["snail/0030"] = 31,
+    ["snail/0031"] = 32,
+    ["snail/0032"] = 33,
+    ["snail/0033"] = 34,
+    ["snail/0034"] = 35,
+    ["snail/0035"] = 36,
+    ["snail/0036"] = 37,
+    ["snail/0037"] = 38,
+    ["snail/0038"] = 39,
+    ["snail/0039"] = 40,
 }
 
 function SheetInfo:getSheet()
