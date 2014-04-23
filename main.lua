@@ -57,7 +57,7 @@ mte.enableBox2DPhysics()
 mte.physics.start()
 mte.physics.setGravity(0, 0)
 --mte.physics.setDrawMode("hybrid")
-mte.loadMap("map.tmx")
+mte.loadMap("map2.tmx")
 mte.drawObjects() 
 local scale = widthRatio
 mte.setCamera({ locX = 10, locY = 39, scale = scale})
