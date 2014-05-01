@@ -169,6 +169,7 @@ function scene:willEnterScene( event )
 
 	ScoreCreate()
 	score = 0
+	direction = 0
 end
 
 local function gameLoop( event )
@@ -234,7 +235,7 @@ function gameover()
 	-- enemy:pause()
 	-- player:pause()
 	-- Runtime:removeEventListener("enterFrame", gameLoop)
-	storyboard.gotoScene( "menu", "flip", 500 )
+	storyboard.gotoScene( "menu", "flip", 200 )
 end
 
 -- Called immediately after scene has moved onscreen:

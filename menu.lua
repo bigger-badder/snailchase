@@ -27,7 +27,7 @@ function scene:createScene( event )
 		width=80, height=40,
 		onRelease = function()
 			-- launch the game scene
-			storyboard.gotoScene( "game", "slideLeft", 500 )
+			storyboard.gotoScene( "game", "slideLeft", 200 )
 		end
 	}
 	playBtn.x = display.contentWidth * 0.5
