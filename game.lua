@@ -239,23 +239,25 @@ end
 
 -- Called immediately after scene has moved onscreen:
 function scene:enterScene( event )
-        local group = self.view
+    local group = self.view
 
-        buttonLeftOverlay:addEventListener("touch", move)
-		buttonRightOverlay:addEventListener("touch", move)
-		Runtime:addEventListener("enterFrame", gameLoop)
+    buttonLeftOverlay:addEventListener("touch", move)
+	buttonRightOverlay:addEventListener("touch", move)
+	Runtime:addEventListener("enterFrame", gameLoop)
 end
 
 
 -- Called when scene is about to move offscreen:
 function scene:exitScene( event )
-        local group = self.view
+    local group = self.view
 
-        buttonLeftOverlay:removeEventListener("touch", move)
-		buttonRightOverlay:removeEventListener("touch", move)
-		Runtime:removeEventListener("enterFrame", gameLoop)
-		
-		--mte.cleanup()
+    scoreText:delete()
+
+    buttonLeftOverlay:removeEventListener("touch", move)
+	buttonRightOverlay:removeEventListener("touch", move)
+	Runtime:removeEventListener("enterFrame", gameLoop)
+	
+	--mte.cleanup()
 end
 
 -- Called prior to the removal of scene's "view" (display group)
