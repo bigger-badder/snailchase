@@ -8,6 +8,7 @@
 local mte = require("lib.mte").createMTE()
 local TextCandy = require("lib.lib_text_candy")
 local _ = require 'underscore'
+local myData = require('myData')
 require("pprint")
 
 -- View Settings
@@ -231,10 +232,8 @@ end
 
 
 function gameover()
-	-- print('Game Over!')
-	-- enemy:pause()
-	-- player:pause()
-	-- Runtime:removeEventListener("enterFrame", gameLoop)
+	myData.score    = score
+	myData.gameOver = true
 	storyboard.gotoScene( "menu", "flip", 200 )
 end
 
