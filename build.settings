@@ -14,10 +14,21 @@ settings =
 		}
 	},
 
-	--[[ For Android:
+    android =
+    {
+        usesPermissions =
+        {
+            "android.permission.INTERNET",
+            "android.permission.ACCESS_NETWORK_STATE",
+        },
+    },
 
-	androidPermissions = {
-  		"android.permission.INTERNET",
-  	},
-	]]--
+    plugins =
+    {
+        ["plugin.google.play.services"] =
+        {
+            publisherId = "com.coronalabs"
+        },
+    },  
+
 }
