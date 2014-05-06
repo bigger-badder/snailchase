@@ -1,3 +1,11 @@
+local TextCandy = require("lib.lib_text_candy")
+-- LOAD & ADD A CHARSET
+TextCandy.AddCharset ("EXOBIG", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+TextCandy.AddCharset ("EXOMID", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+TextCandy.AddCharset ("EXOSMALL", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+TextCandy.ScaleCharset('EXOBIG', 0.7)
+TextCandy.ScaleCharset('EXOMID', 0.5)
+TextCandy.ScaleCharset('EXOSMALL', 0.3)
 -- add Corona's Storyboard module
 local storyboard = require( "storyboard" )
 
@@ -16,6 +24,10 @@ local scoreLabel
 
 local myData = require('myData')
 
+function startGame()
+	storyboard.gotoScene('game', 'slideLeft', 200)
+end
+
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local group = self.view
@@ -30,32 +42,86 @@ function scene:createScene( event )
 	background.y = 0
 	group:insert(background)
 
-	local label = display.newText(group, "Snail race", 20, 20, "Verdana", 20 )
-	label:setTextColor( 255, 255, 255 )
-	label.x = display.contentWidth * 0.5
+	local label = TextCandy.CreateText({
+		fontName     = "EXOBIG", 						
+		x            = display.contentWidth / 2,						
+		y            = 0,
+		text         = "Snail Chase",	
+		originX      = "CENTER",							
+		originY      = "TOP",							
+		textFlow     = "CENTER",
+		charSpacing  = -5,
+		lineSpacing  = 0,
+		wrapWidth    = 400, 			
+		charBaseLine = "BOTTOM",
+		showOrigin 	 = false						
+	})
+	label:setColor(0.99, 0.84, 0.16)
 
-	playBtn = widget.newButton{
-		label="Tap to Play",
-		labelColor = { default={255}, over={128} },
-		width=80, height=40,
-		onRelease = function()
-			-- launch the game scene
-			storyboard.gotoScene( "game", "slideLeft", 200 )
-		end
-	}
-	playBtn.x = display.contentWidth * 0.5
-	playBtn.y = display.contentHeight * 0.95
+	local playBtn = TextCandy.CreateText({
+		fontName     = "EXOMID", 						
+		x            = display.contentWidth / 2,						
+		y            = display.contentHeight - 70,
+		text         = "PLAY",	
+		originX      = "CENTER",							
+		originY      = "TOP",							
+		textFlow     = "CENTER",
+		charSpacing  = 0,
+		lineSpacing  = 0,
+		wrapWidth    = 400, 			
+		charBaseLine = "BOTTOM",
+		showOrigin 	 = false						
+	})
+	playBtn:setColor(0.99, 0.84, 0.16)
+	playBtn:applyAnimation({
+		interval		= 1,
+		startNow		= true,
+		restartOnChange = true,
+		delay			= 0,
+		duration		= 0,
+		charWise		= true,
+		autoRemoveText  = false,
+		frequency 		= 250,
+		startAlpha		= 1,
+		alphaRange		= 0.5
+	})
+	playBtn:addEventListener("touch", startGame)
 
-	gameOverLabel = display.newText(group, 'Score', 20, 20, "Verdana", 20 )
-	gameOverLabel:setFillColor( 255, 255, 255 )
+	gameOverLabel = TextCandy.CreateText({
+		fontName     = "EXOMID", 						
+		x            = display.contentWidth / 2,						
+		y            = 0,
+		text         = "Score",	
+		originX      = "CENTER",							
+		originY      = "TOP",							
+		textFlow     = "CENTER",
+		charSpacing  = -5,
+		lineSpacing  = 0,
+		wrapWidth    = 400, 			
+		charBaseLine = "BOTTOM",
+		showOrigin 	 = false						
+	})
 	gameOverLabel.x = display.contentWidth * 0.5
-	gameOverLabel.y = display.contentHeight * 0.3
+	gameOverLabel.y = display.contentHeight * 0.4
 	gameOverLabel.alpha = 0
 
-	scoreLabel = display.newText(group, 0, 20, 20, "Verdana", 20 )
-	scoreLabel:setFillColor( 255, 255, 255 )
+
+	scoreLabel = TextCandy.CreateText({
+		fontName     = "EXOMID", 						
+		x            = display.contentWidth / 2,						
+		y            = 0,
+		text         = '',	
+		originX      = "CENTER",							
+		originY      = "TOP",							
+		textFlow     = "CENTER",
+		charSpacing  = -5,
+		lineSpacing  = 0,
+		wrapWidth    = 400, 			
+		charBaseLine = "BOTTOM",
+		showOrigin 	 = false						
+	})
 	scoreLabel.x = display.contentWidth * 0.5
-	scoreLabel.y = display.contentHeight * 0.4
+	scoreLabel.y = display.contentHeight * 0.5
 	scoreLabel.alpha = 0
 
 	bestScoreLabel = display.newText(group, 'Best: '..myData.currentHighScore, 20, 20, "Verdana", 20 )
@@ -63,12 +129,15 @@ function scene:createScene( event )
 	bestScoreLabel.x = display.contentWidth * 0.5
 	bestScoreLabel.y = display.contentHeight * 0.8
 
+	group:insert( label )
 	group:insert( playBtn )
 	group:insert( bestScoreLabel )
 end
 
 function scene:destroyScene( event )
 	local group = self.view
+
+	playBtn:removeEventListener("touch", startGame)
 
 	if playBtn then
 		playBtn:removeSelf()
@@ -83,7 +152,7 @@ function scene:enterScene(event)
 	if myData.gameOver == true then
 
 		gameOverLabel.alpha = 1
-		scoreLabel.text = myData.score
+		scoreLabel:setText(myData.score)
 		scoreLabel.alpha = 1
 
 		-- save highscore
