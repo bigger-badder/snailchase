@@ -17,6 +17,16 @@ local myData = require('myData')
 function scene:createScene( event )
 	local group = self.view
 
+	-- background should appear behind all scenes
+	local background = display.newImage( "images/cover.jpg" )
+	background.width = display.contentWidth
+	background.height = display.contentHeight
+	background.anchorX = 0
+	background.anchorY = 0
+	background.x = 0
+	background.y = 0
+	group:insert(background)
+
 	local label = display.newText(group, "Snail race", 20, 20, "Verdana", 20 )
 	label:setTextColor( 255, 255, 255 )
 	label.x = display.contentWidth * 0.5
@@ -31,7 +41,7 @@ function scene:createScene( event )
 		end
 	}
 	playBtn.x = display.contentWidth * 0.5
-	playBtn.y = display.contentHeight * 0.5
+	playBtn.y = display.contentHeight * 0.95
 
 	group:insert( playBtn )	
 end
@@ -51,11 +61,15 @@ function scene:enterScene(event)
 
 	print(myData.gameOver)
 	if myData.gameOver == true then
-		print('Display game over text')
-		local gameOverLabel = display.newText(group, "Game Over", 20, 20, "Verdana", 20 )
+		local gameOverLabel = display.newText(group, 'Score', 20, 20, "Verdana", 20 )
 		gameOverLabel:setTextColor( 255, 255, 255 )
 		gameOverLabel.x = display.contentWidth * 0.5
 		gameOverLabel.y = display.contentHeight * 0.3
+
+		local scoreLabel = display.newText(group, myData.score, 20, 20, "Verdana", 20 )
+		scoreLabel:setTextColor( 255, 255, 255 )
+		scoreLabel.x = display.contentWidth * 0.5
+		scoreLabel.y = display.contentHeight * 0.4
 	end
 end
 
