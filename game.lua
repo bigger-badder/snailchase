@@ -145,7 +145,9 @@ function scene:willEnterScene( event )
 
 
 	--CREATE ENEMY SPRITE ------------------------------------------------------------
-	enemy = display.newSprite( myImageSheet , {frames={1,2,3,4,5,6,7,8,9,10,11,12,13,14}} )
+	local birdSheetInfo = require("bird")
+	local birdImageSheet = graphics.newImageSheet( "bird.png", birdSheetInfo:getSheet() )
+	enemy = display.newSprite( birdImageSheet , {frames={1,2,3,4,5,6}} )
 	enemy:setSequence("1");
 	-- mte.physics.addBody(enemy, "dynamic", {friction = 500, radius = 20, bounce = 0, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
 	enemy.isFixedRotation = false
@@ -157,8 +159,8 @@ function scene:willEnterScene( event )
 		layer =  mte.getSpriteLayer(1), 
 		locX = 11, 
 		locY = 55,
-		levelWidth = 114,
-		levelHeight = 240,
+		levelWidth = 252,
+		levelHeight = 252,
 		name = "enemy"
 	}
 
