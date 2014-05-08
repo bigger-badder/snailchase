@@ -3,6 +3,7 @@ local TextCandy = require("lib.lib_text_candy")
 TextCandy.AddCharset ("EXOBIG", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOMID", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOSMALL", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+TextCandy.AddVectorFont("Aller Display", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 TextCandy.ScaleCharset('EXOBIG', 0.7)
 TextCandy.ScaleCharset('EXOMID', 0.5)
 TextCandy.ScaleCharset('EXOSMALL', 0.3)
@@ -44,7 +45,7 @@ function scene:createScene( event )
 	group:insert(background)
 
 	local label = TextCandy.CreateText({
-		fontName     = "EXOBIG", 						
+		fontName     = "Aller Display", 						
 		x            = display.contentWidth / 2,						
 		y            = 0,
 		text         = "Snail Chase",	
@@ -58,29 +59,32 @@ function scene:createScene( event )
 		showOrigin 	 = false						
 	})
 	label:setColor(0.99, 0.84, 0.16)
+	label:addDropShadow(1, 1, 1)
 
 	local playBtn = TextCandy.CreateText({
-		fontName     = "EXOMID", 						
+		fontName     = "Aller Display", 						
 		x            = display.contentWidth / 2,						
 		y            = display.contentHeight - 70,
 		text         = "PLAY",	
 		originX      = "CENTER",							
 		originY      = "TOP",							
 		textFlow     = "CENTER",
-		charSpacing  = 0,
+		charSpacing  = -5,
 		lineSpacing  = 0,
 		wrapWidth    = 400, 			
 		charBaseLine = "BOTTOM",
-		showOrigin 	 = false						
+		showOrigin 	 = false,
+		fontSize     = 40					
 	})
 	playBtn:setColor(0.99, 0.84, 0.16)
+	playBtn:addDropShadow(1, 1, 1)
 	playBtn:applyAnimation({
 		interval		= 1,
 		startNow		= true,
 		restartOnChange = true,
 		delay			= 0,
 		duration		= 0,
-		charWise		= true,
+		charWise		= false,
 		autoRemoveText  = false,
 		frequency 		= 250,
 		startAlpha		= 1,
@@ -133,6 +137,8 @@ function scene:createScene( event )
 	group:insert( label )
 	group:insert( playBtn )
 	group:insert( bestScoreLabel )
+	group:insert( scoreLabel )
+	group:insert( gameOverLabel )
 end
 
 function scene:destroyScene( event )
