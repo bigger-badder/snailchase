@@ -17,16 +17,22 @@ settings =
             },
             UIApplicationExitsOnSuspend = true
         },
-		}
 	},
 
-    android =
-    {
-        usesPermissions =
-        {
+    android = {
+        usesPermissions = {
             "android.permission.INTERNET",
             "android.permission.ACCESS_NETWORK_STATE",
         },
     },
+
+    plugins =
+    {
+        ["CoronaProvider.ads.iads"] =
+        {
+            publisherId = "com.coronalabs",
+            supportedPlatforms = { iphone=true, ["iphone-sim"]=true },
+        },
+    },  
 
 }

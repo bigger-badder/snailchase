@@ -15,12 +15,17 @@ local function adMobListener( event )
 end
 
 
+showAd = function( adType )
+	local adX, adY = display.screenOriginX, 0
+	--statusText.text = "Working..."
+	ads.show( adType, { x=adX, y=adY, testMode=true } )
+end
+
 if ( system.getInfo("platformName") == "Android" ) then
    ads.init( "admob", "ca-app-pub-6811948289977255/6890778124", adMobListener )
 else
-   ads.init( "iads", "snail.chase", iAdsListener )
+   ads.init( "iads", "com.snail.chase", iAdsListener )
 end
 
 
-ads:setCurrentProvider( "admob" )
-ads.show("banner")
+ads:setCurrentProvider( "iads" )

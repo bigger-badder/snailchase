@@ -275,6 +275,8 @@ function scene:destroyScene( event )
 
 end
 
+showAd( "banner" ) 
+
 scene:addEventListener( "willEnterScene", scene )
 scene:addEventListener( "enterScene", scene )
 scene:addEventListener( "exitScene", scene )
