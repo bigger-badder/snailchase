@@ -23,12 +23,4 @@ settings =
         },
     },
 
-    plugins =
-    {
-        ["plugin.google.play.services"] =
-        {
-            publisherId = "com.coronalabs"
-        },
-    },  
-
 }

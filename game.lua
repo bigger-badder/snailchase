@@ -132,7 +132,7 @@ function scene:willEnterScene( event )
 		kind = "sprite", 
 		layer =  mte.getSpriteLayer(1), 
 		locX = 11, 
-		locY = 45,
+		locY = 96,
 		levelWidth = 114,
 		levelHeight = 240,
 		name = "player"
@@ -158,7 +158,7 @@ function scene:willEnterScene( event )
 		kind = "sprite", 
 		layer =  mte.getSpriteLayer(1), 
 		locX = 11, 
-		locY = 55,
+		locY = 106,
 		levelWidth = 252,
 		levelHeight = 252,
 		name = "enemy"

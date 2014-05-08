@@ -132,6 +132,8 @@ function scene:createScene( event )
 
 	group:insert( label )
 	group:insert( playBtn )
+	group:insert( gameOverLabel )
+	group:insert( scoreLabel )
 	group:insert( bestScoreLabel )
 end
 
