@@ -35,7 +35,7 @@ function scene:createScene( event )
 	local group = self.view
 
 	-- background should appear behind all scenes
-	local background = display.newImage( "images/cover.jpg" )
+	local background = display.newImage( "menuBG.png" )
 	background.width = display.contentWidth
 	background.height = display.contentHeight
 	background.anchorX = 0
@@ -44,27 +44,10 @@ function scene:createScene( event )
 	background.y = 0
 	group:insert(background)
 
-	local label = TextCandy.CreateText({
-		fontName     = "Aller Display", 						
-		x            = display.contentWidth / 2,						
-		y            = 0,
-		text         = "Snail Chase",	
-		originX      = "CENTER",							
-		originY      = "TOP",							
-		textFlow     = "CENTER",
-		charSpacing  = -5,
-		lineSpacing  = 0,
-		wrapWidth    = 400, 			
-		charBaseLine = "BOTTOM",
-		showOrigin 	 = false						
-	})
-	label:setColor(0.99, 0.84, 0.16)
-	label:addDropShadow(1, 1, 1)
-
 	local playBtn = TextCandy.CreateText({
 		fontName     = "Aller Display", 						
 		x            = display.contentWidth / 2,						
-		y            = display.contentHeight - 70,
+		y            = display.contentHeight - 130,
 		text         = "PLAY",	
 		originX      = "CENTER",							
 		originY      = "TOP",							
@@ -76,7 +59,7 @@ function scene:createScene( event )
 		showOrigin 	 = false,
 		fontSize     = 40					
 	})
-	playBtn:setColor(0.99, 0.84, 0.16)
+	playBtn:setColor(66 / 256, 199 / 256, 66 / 256)
 	playBtn:addDropShadow(1, 1, 1)
 	playBtn:applyAnimation({
 		interval		= 1,
@@ -129,12 +112,11 @@ function scene:createScene( event )
 	scoreLabel.y = display.contentHeight * 0.5
 	scoreLabel.alpha = 0
 
-	bestScoreLabel = display.newText(group, 'Best: '..myData.currentHighScore, 20, 20, "Verdana", 20 )
-	bestScoreLabel:setFillColor( 255, 255, 255 )
+	bestScoreLabel = display.newText(group, 'BEST: '..myData.currentHighScore, 20, 20, "Aller Display", 20 )
+	bestScoreLabel:setFillColor( 255 / 255, 255 / 255, 255 / 255 )
 	bestScoreLabel.x = display.contentWidth * 0.5
-	bestScoreLabel.y = display.contentHeight * 0.8
+	bestScoreLabel.y = display.contentHeight * 0.92
 
-	group:insert( label )
 	group:insert( playBtn )
 	group:insert( gameOverLabel )
 	group:insert( scoreLabel )
@@ -173,7 +155,7 @@ function scene:enterScene(event)
 		end
 	end
 
-	bestScoreLabel.text = 'Best: '..myData.currentHighScore
+	bestScoreLabel.text = 'BEST: '..myData.currentHighScore
 end
 
 -- "createScene" event is dispatched if scene's view does not exist

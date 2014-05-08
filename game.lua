@@ -70,7 +70,7 @@ function ScoreCreate()
 	scoreText = TextCandy.CreateText({
 		fontName     = "DIGITS", 						
 		x            = vW / 2,						
-		y            = vH - 100,
+		y            = 40,
 		text         = "0.0m",	
 		originX      = "CENTER",							
 		originY      = "TOP",							
