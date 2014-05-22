@@ -53,7 +53,7 @@ mte.drawObjects()
 mte.setCamera({ locX = 10, locY = 39, scale = scale})
 
 TextCandy.AddCharset ("DIGITS", "digits", "digits.png", "1234567890.m", 40)
-TextCandy.AddVectorFont("Aller Display", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
+TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
@@ -186,23 +186,11 @@ function displayGameOver()
   gameOverBg = display.newRect( vW / 2, vH / 2, vW, vH )
   gameOverBg:setFillColor( 0, 0.4 )
 
-  restartBtn = widget.newButton
-  {
-      x = vW / 2,
-      y = vH - 50,
-      id = "button1",
-      label = "RESTART",
-      onEvent = restartGame,
-      labelColor = { default={ 1, 1, 1 } }
-  }
-  restartBtn.anchorX = 0.5
-  restartBtn.anchorY = 1
-
-  gameOverText = TextCandy.CreateText({
-    fontName     = "Aller Display",             
-    x            = display.contentWidth / 2,            
-    y            = 100,
-    text         = "GAME\n OVER",  
+  restartBtn = TextCandy.CreateText({
+    fontName     = "Mecha Bold",             
+    x            = vW / 2,         
+    y            = vH - 150,
+    text         = "RESTART",  
     originX      = "CENTER",              
     originY      = "TOP",             
     textFlow     = "CENTER",
@@ -213,14 +201,33 @@ function displayGameOver()
     showOrigin   = false,
     fontSize     = 40         
   })
+  restartBtn:addEventListener("touch", restartGame)
+  restartBtn:setColor(256 / 256, 256 / 256, 256 / 256)
+  restartBtn:addDropShadow(1, 1, 1)
+
+  gameOverText = TextCandy.CreateText({
+    fontName     = "Mecha Bold",             
+    x            = display.contentWidth / 2,            
+    y            = 20,
+    text         = "GAME \nOVER",  
+    originX      = "CENTER",              
+    originY      = "TOP",             
+    textFlow     = "CENTER",
+    charSpacing  = 20,
+    lineSpacing  = 20,
+    wrapWidth    = 4,       
+    charBaseLine = "BOTTOM",
+    showOrigin   = false,
+    fontSize     = 100         
+  })
   gameOverText:setColor(256 / 256, 256 / 256, 256 / 256)
   gameOverText:addDropShadow(1, 1, 1)
 
   gameOverScore = TextCandy.CreateText({
-    fontName     = "Aller Display",             
+    fontName     = "Mecha Bold",             
     x            = display.contentWidth / 2,            
     y            = 200,
-    text         = "SCORE: " .. score,  
+    text         = "SCORE  " .. score,  
     originX      = "CENTER",              
     originY      = "TOP",             
     textFlow     = "CENTER",
@@ -235,10 +242,10 @@ function displayGameOver()
   gameOverScore:addDropShadow(1, 1, 1)
 
   gameOverHS = TextCandy.CreateText({
-    fontName     = "Aller Display",             
+    fontName     = "Mecha Bold",             
     x            = display.contentWidth / 2,            
     y            = 240,
-    text         = "HIGHSCORE: " .. myData.currentHighScore,  
+    text         = "HIGHSCORE  " .. myData.currentHighScore,  
     originX      = "CENTER",              
     originY      = "TOP",             
     textFlow     = "CENTER",
