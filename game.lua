@@ -397,12 +397,12 @@ function scene:createScene( event )
 
   -- CREATE A TEXT OBJECT USING THIS CHARSET
   scoreText = TextCandy.CreateText({
-    fontName     = "DIGITS",            
-    x            = vW / 2,            
-    y            = 40,
+    fontName     = "Mecha Bold",            
+    x            = display.screenOriginX + vW / 2,            
+    y            = display.screenOriginY + 20,
     text         = "0.0m",  
     originX      = "CENTER",              
-    originY      = "TOP",             
+    originY      = "BOTTOM",             
     textFlow     = "CENTER",
     charSpacing  = 0,
     lineSpacing  = 0,
@@ -410,7 +410,7 @@ function scene:createScene( event )
     charBaseLine = "BOTTOM",
     showOrigin   = false            
     })
-  scoreText:setColor(0.99, 0.84, 0.16)
+  scoreText:setColor(1, 1, 1)
 
   group:insert( mte.getMapObj() )
 
