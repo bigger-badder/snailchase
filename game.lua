@@ -35,7 +35,8 @@ local yForce                                               = 0
 local score                                                = 0
 local scoreText                                            = nil
 local lastTileX, lastTileY                                 = 0
-local player, enemy, buttonLeftOverlay, buttonRightOverlay = nil
+local thisGroup                                            = nil
+local player, enemy, fight, buttonLeftOverlay, buttonRightOverlay = nil
 local restartBtn, gameOverBg, gameOverText, gameOverScore, gameOverHS = nil
 
 vW    = display.viewableContentWidth
@@ -74,13 +75,17 @@ function resetGame()
   player.x        = mte.locToLevelPosX(11, mte.getSpriteLayer(1))
   player.y        = mte.locToLevelPosY(96, mte.getSpriteLayer(1))
   player.rotation = 0  
+  player.alpha     = 1
   enemy.x         = mte.locToLevelPosX(11, mte.getSpriteLayer(1))
   enemy.y         = mte.locToLevelPosY(106, mte.getSpriteLayer(1))
+  enemy.alpha     = 1
   lastTileY       = 96
   scoreText.alpha = 1
+  fight.alpha     = 0;
 
   player:play()
   enemy:play()
+  fight:pause()
 
   mte.update()
 
@@ -262,25 +267,39 @@ end
 
 function gameover()
   
-  myData.score    = score
-  myData.gameOver = true
-
   Runtime:removeEventListener("enterFrame", gameLoop)
 
-  player:pause()
-  enemy:pause()
+  fight.x = player.x
+  fight.y = player.y
+  fight.alpha = 1;
+  fight:play()
 
-  -- save highscore
-  local tablefill = [[INSERT INTO highscore VALUES (NULL, ']]..myData.score..[['); ]]
-  myData.db:exec( tablefill )
+  player.alpha = 0
+  enemy.alpha = 0
 
-  if myData.score > myData.currentHighScore then
-    myData.currentHighScore = myData.score
+  local function onTimeOut()
+    myData.score    = score
+    myData.gameOver = true
+
+    fight:pause()
+    player:pause()
+    enemy:pause()
+
+    -- save highscore
+    local tablefill = [[INSERT INTO highscore VALUES (NULL, ']]..myData.score..[['); ]]
+    myData.db:exec( tablefill )
+
+    if myData.score > myData.currentHighScore then
+      myData.currentHighScore = myData.score
+    end
+
+    scoreText.alpha = 0
+
+    displayGameOver()
   end
 
-  scoreText.alpha = 0
+  timer.performWithDelay( 1000, onTimeOut )
 
-  displayGameOver()
 end
 
 -- Called when the scene's view does not exist:
@@ -294,6 +313,8 @@ function scene:createScene( event )
   
   -----------------------------------------------------------------------------
   
+  thisGroup = group;
+
   buttonLeftOverlay = display.newRect(display.screenOriginX, display.screenOriginY, vW / 2, vH)
   buttonLeftOverlay.anchorX = 0;
   buttonLeftOverlay.anchorY = 0;
@@ -316,7 +337,6 @@ function scene:createScene( event )
   player.isFixedRotation = false
   player.linearDamping = 3
   player.angularDamping = 220
-
   group:insert( player )
 
   local setup = {
@@ -333,13 +353,13 @@ function scene:createScene( event )
   mte.setCameraFocus(player)
   player:play()
 
+
   --CREATE ENEMY SPRITE ------------------------------------------------------------
   local birdSheetInfo = require("bird")
   local birdImageSheet = graphics.newImageSheet( "bird.png", birdSheetInfo:getSheet() )
   enemy = display.newSprite( birdImageSheet , {frames={1,2,3,4,5,6}} )
   enemy:setSequence("1");
   enemy.isFixedRotation = false
-
   group:insert( enemy )
 
   local setup = {
@@ -354,6 +374,26 @@ function scene:createScene( event )
 
   mte.addSprite(enemy, setup)
   enemy:play()
+
+  --CREATE FIGHT SPRITE ------------------------------------------------------------
+  local sheetInfo = require("fight")
+  local myImageSheet = graphics.newImageSheet( "fight.png", sheetInfo:getSheet() )
+  fight = display.newSprite( myImageSheet , {frames={1,2,3,4,5,6,7,8,9,10}} )
+
+  group:insert( fight )
+
+  local setup = {
+    kind = "sprite", 
+    layer =  mte.getSpriteLayer(1), 
+    locX = player.locX, 
+    locY = player.locY,
+    levelWidth = 240,
+    levelHeight = 240,
+    name = "fight"
+  }
+  mte.addSprite(fight, setup)
+  fight.alpha = 0;
+
 
   -- CREATE A TEXT OBJECT USING THIS CHARSET
   scoreText = TextCandy.CreateText({
