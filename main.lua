@@ -7,6 +7,7 @@ local myData = require('myData')
 ads = require "ads"
 
 local adsClass = require('adsClass')
+local sounds = require('sounds')
 
 --Include sqlite
 local sqlite3 = require "sqlite3"

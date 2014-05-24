@@ -243,6 +243,8 @@ end
 function scene:enterScene( event )
     local group = self.view
 
+    showAd( "banner" ) 
+
     buttonLeftOverlay:addEventListener("touch", move)
 	buttonRightOverlay:addEventListener("touch", move)
 	Runtime:addEventListener("enterFrame", gameLoop)
@@ -275,7 +277,6 @@ function scene:destroyScene( event )
 
 end
 
-showAd( "banner" ) 
 
 scene:addEventListener( "willEnterScene", scene )
 scene:addEventListener( "enterScene", scene )

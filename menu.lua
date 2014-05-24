@@ -30,6 +30,9 @@ function startGame()
 end
 
 
+
+
+
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local group = self.view
@@ -47,20 +50,20 @@ function scene:createScene( event )
 	local playBtn = TextCandy.CreateText({
 		fontName     = "Aller Display", 						
 		x            = display.contentWidth / 2,						
-		y            = display.contentHeight - 130,
+		y            = display.contentHeight - 180,
 		text         = "PLAY",	
 		originX      = "CENTER",							
 		originY      = "TOP",							
 		textFlow     = "CENTER",
-		charSpacing  = -5,
+		charSpacing  = 10,
 		lineSpacing  = 0,
 		wrapWidth    = 400, 			
 		charBaseLine = "BOTTOM",
 		showOrigin 	 = false,
-		fontSize     = 40					
+		fontSize     = 60					
 	})
-	playBtn:setColor(66 / 256, 199 / 256, 66 / 256)
-	playBtn:addDropShadow(1, 1, 1)
+	playBtn:setColor(1, 1, 1)
+	--playBtn:addDropShadow(1, 1, 1)
 	playBtn:applyAnimation({
 		interval		= 1,
 		startNow		= true,
@@ -74,6 +77,7 @@ function scene:createScene( event )
 		alphaRange		= 0.5
 	})
 	playBtn:addEventListener("touch", startGame)
+
 
 	gameOverLabel = TextCandy.CreateText({
 		fontName     = "EXOMID", 						
@@ -140,6 +144,8 @@ function scene:enterScene(event)
 
 	local group = self.view
 
+	ads.hide( )
+
 	if myData.gameOver == true then
 
 		gameOverLabel.alpha = 1
@@ -155,7 +161,7 @@ function scene:enterScene(event)
 		end
 	end
 
-	bestScoreLabel.text = 'BEST: '..myData.currentHighScore
+	bestScoreLabel.text = 'HIGH SCORE : '..myData.currentHighScore
 end
 
 -- "createScene" event is dispatched if scene's view does not exist
