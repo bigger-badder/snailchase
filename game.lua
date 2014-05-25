@@ -54,7 +54,7 @@ mte.drawObjects()
 mte.setCamera({ locX = 10, locY = 39, scale = scale})
 
 TextCandy.AddCharset ("DIGITS", "digits", "digits.png", "1234567890.m", 40)
-TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
+TextCandy.AddVectorFont("Mecha", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
@@ -62,7 +62,10 @@ TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmno
 
 function resetGame()
 
-  showAd( "banner" )
+  local adX = display.screenOriginX
+  local adY = (display.screenOriginY + display.viewableContentHeight) - 30;
+
+  showAd( "banner", { x=adX, y=adY, interval=30, testMode=true } )
 
   mte.setCamera({ locX = 11, locY = 96, scale = scale})
   
@@ -192,7 +195,7 @@ function displayGameOver()
   gameOverBg:setFillColor( 0, 0.4 )
 
   restartBtn = TextCandy.CreateText({
-    fontName     = "Mecha Bold",             
+    fontName     = "Mecha",             
     x            = vW / 2,         
     y            = vH - 150,
     text         = "RESTART",  
@@ -211,7 +214,7 @@ function displayGameOver()
   restartBtn:addDropShadow(1, 1, 1)
 
   gameOverText = TextCandy.CreateText({
-    fontName     = "Mecha Bold",             
+    fontName     = "Mecha",             
     x            = display.contentWidth / 2,            
     y            = 20,
     text         = "GAME \nOVER",  
@@ -229,7 +232,7 @@ function displayGameOver()
   gameOverText:addDropShadow(1, 1, 1)
 
   gameOverScore = TextCandy.CreateText({
-    fontName     = "Mecha Bold",             
+    fontName     = "Mecha",             
     x            = display.contentWidth / 2,            
     y            = 200,
     text         = "SCORE  " .. score,  
@@ -247,7 +250,7 @@ function displayGameOver()
   gameOverScore:addDropShadow(1, 1, 1)
 
   gameOverHS = TextCandy.CreateText({
-    fontName     = "Mecha Bold",             
+    fontName     = "Mecha",             
     x            = display.contentWidth / 2,            
     y            = 240,
     text         = "HIGHSCORE  " .. myData.currentHighScore,  
@@ -397,7 +400,7 @@ function scene:createScene( event )
 
   -- CREATE A TEXT OBJECT USING THIS CHARSET
   scoreText = TextCandy.CreateText({
-    fontName     = "Mecha Bold",            
+    fontName     = "Mecha",            
     x            = display.screenOriginX + vW / 2,            
     y            = display.screenOriginY + 20,
     text         = "0.0m",  

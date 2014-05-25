@@ -3,7 +3,7 @@ local TextCandy = require("lib.lib_text_candy")
 TextCandy.AddCharset ("EXOBIG", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOMID", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOSMALL", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
-TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
+TextCandy.AddVectorFont("Mecha", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 TextCandy.ScaleCharset('EXOBIG', 0.7)
 TextCandy.ScaleCharset('EXOMID', 0.5)
@@ -109,7 +109,7 @@ function scene:createScene( event )
 	scoreLabel.y = display.contentHeight * 0.5
 	scoreLabel.alpha = 0
 
-	bestScoreLabel = display.newText(group, 'HIGH SCORE : '..myData.currentHighScore, 20, 20, "Mecha Bold", 30 )
+	bestScoreLabel = display.newText(group, 'HIGH SCORE : '..myData.currentHighScore, 20, 20, "Mecha", 30 )
 	bestScoreLabel:setFillColor( 255 / 255, 255 / 255, 255 / 255 )
 	bestScoreLabel.x = display.contentWidth * 0.5
 	bestScoreLabel.y = display.contentHeight * 0.92
