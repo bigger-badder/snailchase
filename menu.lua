@@ -48,10 +48,10 @@ function scene:createScene( event )
 	group:insert(background)
 
 	local playBtn = display.newImage( "images/newGame.png" )
-	playBtn.width = 410;
-	playBtn.height = 93;
+	playBtn.width = 328;
+	playBtn.height = 74;
 	playBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	playBtn.y = display.screenOriginY + 740
+	playBtn.y = display.screenOriginY + (display.contentHeight / 2) + 200
 	group:insert(playBtn)
 	playBtn:addEventListener("touch", startGame)
 
@@ -66,10 +66,10 @@ function scene:createScene( event )
 	--]]
 
 	local soundOffBtn = display.newImage( "images/turnOffSounds.png" )
-	soundOffBtn.width = 659;
-	soundOffBtn.height = 93;
+	soundOffBtn.width = 527;
+	soundOffBtn.height = 74;
 	soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	soundOffBtn.y = display.screenOriginY + 860
+	soundOffBtn.y = playBtn.y + 100
 	group:insert(soundOffBtn)
 	soundOffBtn:addEventListener("touch", myData.setSound)
 
@@ -84,22 +84,22 @@ function scene:createScene( event )
 	--]]
 
 	local musicOffBtn = display.newImage( "images/turnOffMusic.png" )
-	musicOffBtn.width = 597;
-	musicOffBtn.height = 93;
+	musicOffBtn.width = 478;
+	musicOffBtn.height = 74;
 	musicOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	musicOffBtn.y = display.screenOriginY + 980
+	musicOffBtn.y = soundOffBtn.y + 100
 	group:insert(musicOffBtn)
 	musicOffBtn:addEventListener("touch", myData.setMusic)
 
 	scoreLabel = TextCandy.CreateText({
-		fontName     = "MechaBitmap", 						
+		fontName     = "Mecha", 						
 		x            = display.contentWidth / 2,						
 		y            = 0,
 		text         = 'HIGH SCORE : '.. myData.settings.highscore .. 'm',	
 		originX      = "CENTER",							
 		originY      = "TOP",							
 		textFlow     = "CENTER",
-		charSpacing  = -40,
+		charSpacing  = 0,
 		lineSpacing  = 0,
 		wrapWidth    = display.contentWidth, 			
 		charBaseLine = "BOTTOM",
