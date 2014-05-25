@@ -33,8 +33,6 @@ end
 
 
 
-
-
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local group = self.view
@@ -64,7 +62,7 @@ function scene:createScene( event )
 	soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
 	soundOnBtn.y = display.screenOriginY + 860
 	group:insert(soundOnBtn)
-	soundOnBtn:addEventListener("touch", startGame)
+	soundOnBtn:addEventListener("touch", myData.setSound)
 	--]]
 
 	local soundOffBtn = display.newImage( "images/turnOffSounds.png" )
@@ -73,7 +71,7 @@ function scene:createScene( event )
 	soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
 	soundOffBtn.y = playBtn.y + 100
 	group:insert(soundOffBtn)
-	soundOffBtn:addEventListener("touch", startGame)
+	soundOffBtn:addEventListener("touch", myData.setSound)
 
 	--[[
 	local musicOnBtn = display.newImage( "images/turnOnMusic.png" )
@@ -82,7 +80,7 @@ function scene:createScene( event )
 	musicOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
 	musicOnBtn.y = display.screenOriginY + 980
 	group:insert(musicOnBtn)
-	musicOnBtn:addEventListener("touch", startGame)
+	musicOnBtn:addEventListener("touch", myData.setMusic)
 	--]]
 
 	local musicOffBtn = display.newImage( "images/turnOffMusic.png" )
@@ -91,9 +89,7 @@ function scene:createScene( event )
 	musicOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
 	musicOffBtn.y = soundOffBtn.y + 100
 	group:insert(musicOffBtn)
-	musicOffBtn:addEventListener("touch", startGame)
-
-	
+	musicOffBtn:addEventListener("touch", myData.setMusic)
 
 	scoreLabel = TextCandy.CreateText({
 		fontName     = "Mecha", 						
