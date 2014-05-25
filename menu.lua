@@ -3,9 +3,10 @@ local TextCandy = require("lib.lib_text_candy")
 TextCandy.AddCharset ("EXOBIG", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOMID", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOSMALL", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+TextCandy.AddCharset ("MechaBitmap", "mecha", "mecha.png", "0123456789ABCDEFGHIJKLMNOPRSTUVWXYZ:!", 30)
 TextCandy.AddVectorFont("Mecha", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 -- TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
-TextCandy.ScaleCharset('EXOBIG', 0.7)
+TextCandy.ScaleCharset('MechaBitmap', 0.2)
 TextCandy.ScaleCharset('EXOMID', 0.5)
 TextCandy.ScaleCharset('EXOSMALL', 0.3)
 -- add Corona's Storyboard module
@@ -92,54 +93,39 @@ function scene:createScene( event )
 	group:insert(musicOffBtn)
 	musicOffBtn:addEventListener("touch", startGame)
 
-	gameOverLabel = TextCandy.CreateText({
-		fontName     = "EXOMID", 						
-		x            = display.contentWidth / 2,						
-		y            = 0,
-		text         = "Score",	
-		originX      = "CENTER",							
-		originY      = "TOP",							
-		textFlow     = "CENTER",
-		charSpacing  = -5,
-		lineSpacing  = 0,
-		wrapWidth    = 400, 			
-		charBaseLine = "BOTTOM",
-		showOrigin 	 = false						
-	})
-	gameOverLabel.x = display.contentWidth * 0.5
-	gameOverLabel.y = display.contentHeight * 0.4
-	gameOverLabel.alpha = 0
-
+	
 
 	scoreLabel = TextCandy.CreateText({
-		fontName     = "EXOMID", 						
+		fontName     = "MechaBitmap", 						
 		x            = display.contentWidth / 2,						
 		y            = 0,
-		text         = '',	
+		text         = 'HIGH SCORE : '..myData.currentHighScore,	
 		originX      = "CENTER",							
 		originY      = "TOP",							
 		textFlow     = "CENTER",
-		charSpacing  = -5,
+		charSpacing  = -40,
 		lineSpacing  = 0,
-		wrapWidth    = 400, 			
+		wrapWidth    = display.contentWidth, 			
 		charBaseLine = "BOTTOM",
 		showOrigin 	 = false						
 	})
-	scoreLabel.x = display.contentWidth * 0.5
-	scoreLabel.y = display.contentHeight * 0.5
-	scoreLabel.alpha = 0
+	scoreLabel.x = display.screenOriginX + ( display.contentWidth * 0.5 ) 
+	scoreLabel.y = ( display.screenOriginY + display.contentHeight ) - 150
+	--scoreLabel.alpha = 0
 
-	bestScoreLabel = display.newText(group, 'HIGH SCORE : '..myData.currentHighScore, 20, 20, "Mecha", 30 )
+	--[[
+	bestScoreLabel = display.newText(group, 'HIGH SCORE : '..myData.currentHighScore, 20, 20, "Mecha", 70 )
 	bestScoreLabel:setFillColor( 255 / 255, 255 / 255, 255 / 255 )
 	bestScoreLabel.x = display.contentWidth * 0.5
 	bestScoreLabel.y = display.contentHeight * 0.92
+	]]
 
 	group:insert( playBtn )
-	group:insert( gameOverLabel )
+	--group:insert( gameOverLabel )
 	group:insert( scoreLabel )
-	group:insert( bestScoreLabel )
+	--group:insert( bestScoreLabel )
 	group:insert( scoreLabel )
-	group:insert( gameOverLabel )
+	--group:insert( gameOverLabel )
 end
 
 function scene:destroyScene( event )
@@ -174,7 +160,7 @@ function scene:enterScene(event)
 		end
 	end
 
-	bestScoreLabel.text = 'HIGH SCORE : '..myData.currentHighScore
+	scoreLabel.text = 'HIGH SCORE : '..myData.currentHighScore
 end
 
 -- "createScene" event is dispatched if scene's view does not exist
