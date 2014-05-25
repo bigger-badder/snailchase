@@ -15,10 +15,9 @@ local function adMobListener( event )
 end
 
 
-showAd = function( adType )
-	local adX, adY = display.screenOriginX, 0
+showAd = function( adType, object )
 	--statusText.text = "Working..."
-	ads.show( adType, { x=adX, y=adY, testMode=true } )
+	ads.show( adType, object)
 end
 
 if ( system.getInfo("platformName") == "Android" ) then
