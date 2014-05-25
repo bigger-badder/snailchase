@@ -65,6 +65,9 @@ function resetGame()
   local adX = display.screenOriginX
   local adY = (display.screenOriginY + display.viewableContentHeight) - 30;
 
+  print("adX : "..adX);
+  print("adY : "..adY);
+
   showAd( "banner", { x=adX, y=adY, interval=30, testMode=true } )
 
   mte.setCamera({ locX = 11, locY = 96, scale = scale})
@@ -191,7 +194,7 @@ end
 
 function displayGameOver()
 
-  gameOverBg = display.newRect( vW / 2, vH / 2, vW, vH )
+  gameOverBg = display.newRect( display.screenOriginX + vW / 2, display.screenOriginY + vH / 2, vW, vH )
   gameOverBg:setFillColor( 0, 0.4 )
 
   restartBtn = TextCandy.CreateText({
