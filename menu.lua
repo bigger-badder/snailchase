@@ -95,7 +95,7 @@ function scene:createScene( event )
 		fontName     = "MechaBitmap", 						
 		x            = display.contentWidth / 2,						
 		y            = 0,
-		text         = 'HIGH SCORE : '..myData.currentHighScore,	
+		text         = 'HIGH SCORE : '.. myData.settings.highscore .. 'm',	
 		originX      = "CENTER",							
 		originY      = "TOP",							
 		textFlow     = "CENTER",
@@ -147,16 +147,12 @@ function scene:enterScene(event)
 		scoreLabel:setText(myData.score)
 		scoreLabel.alpha = 1
 
-		-- save highscore
-		local tablefill = [[INSERT INTO highscore VALUES (NULL, ']]..myData.score..[['); ]]
-		myData.db:exec( tablefill )
-
-		if myData.score > myData.currentHighScore then
-			myData.currentHighScore = myData.score
+		if myData.score > myData.settings.highscore then
+			myData.setHighscore(myData.score)
 		end
 	end
 
-	scoreLabel.text = 'HIGH SCORE : '..myData.currentHighScore
+	scoreLabel.text = 'HIGH SCORE : '.. myData.settings.highscore .. 'm'
 end
 
 -- "createScene" event is dispatched if scene's view does not exist

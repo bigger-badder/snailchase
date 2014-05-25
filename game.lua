@@ -345,7 +345,7 @@ function displayGameOver()
     fontName     = "Mecha",             
     x            = display.contentWidth / 2,            
     y            = 240,
-    text         = "HIGHSCORE  " .. myData.currentHighScore,  
+    text         = "HIGHSCORE  " .. myData.settings.highscore,  
     originX      = "CENTER",              
     originY      = "TOP",             
     textFlow     = "CENTER",
@@ -388,12 +388,9 @@ function gameover()
     player:pause()
     enemy:pause()
 
-    -- save highscore
-    local tablefill = [[INSERT INTO highscore VALUES (NULL, ']]..myData.score..[['); ]]
-    myData.db:exec( tablefill )
 
-    if myData.score > myData.currentHighScore then
-      myData.currentHighScore = myData.score
+    if myData.score > myData.settings.highscore then
+      myData.setHighscore(myData.score)
     end
 
     scoreText.alpha = 0
