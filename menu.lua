@@ -32,8 +32,6 @@ end
 
 
 
-
-
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 	local group = self.view
@@ -62,7 +60,7 @@ function scene:createScene( event )
 	soundBtn.x = display.screenOriginX + (display.contentWidth / 2)
 	soundBtn.y = display.screenOriginY + 320
 	group:insert(soundBtn)
-	soundBtn:addEventListener("touch", startGame)
+	soundBtn:addEventListener("touch", myData.setSound)
 
 	local musicBtn = display.newImage( "images/musicOnBtn.png" )
 	musicBtn.width = 236;
@@ -70,7 +68,7 @@ function scene:createScene( event )
 	musicBtn.x = display.screenOriginX + (display.contentWidth / 2)
 	musicBtn.y = display.screenOriginY + 370
 	group:insert(musicBtn)
-	musicBtn:addEventListener("touch", startGame)
+	musicBtn:addEventListener("touch", myData.setMusic)
 
 	gameOverLabel = TextCandy.CreateText({
 		fontName     = "EXOMID", 						

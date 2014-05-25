@@ -1,4 +1,4 @@
-
+local myData    = require('myData')
 
 -- Sound Effects
 
@@ -9,6 +9,10 @@ local screamChannel;
 
 playSound = function(soundName)
 	
+	if myData.settings.soundOn ~= true then
+		return
+	end
+
 	if soundName == "fight" then 
 		fightChannel = audio.play( fightSound );
 		audio.setVolume( 0.25, fightChannel ) 
@@ -28,6 +32,11 @@ backgroundMusic = audio.loadStream( "music.mp3" );
 backgroundMusicChannel = nil;
 
 playMusic = function()
+
+	if myData.settings.musicOn ~= true then
+		return
+	end
+
 	print("play music")
 	audio.rewind( backgroundMusic )
 	backgroundMusicChannel = audio.play( backgroundMusic, { channel=1, loops=-1, fadein=5000 } )
