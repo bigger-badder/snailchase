@@ -35,9 +35,11 @@ local yForce                                               = 0
 local score                                                = 0
 local scoreText                                            = nil
 local lastTileX, lastTileY                                 = 0
+local countDown                                            = 3
 local thisGroup                                            = nil
 local player, enemy, fight, buttonLeftOverlay, buttonRightOverlay = nil
 local restartBtn, gameOverBg, gameOverText, gameOverScore, gameOverHS = nil
+local instructionBgL, instructionBgR, instructionCD = nil
 
 vW    = display.viewableContentWidth
 vH    = display.viewableContentHeight
@@ -81,17 +83,71 @@ function resetGame()
   enemy.alpha     = 1
   lastTileY       = 96
   scoreText.alpha = 1
-  fight.alpha     = 0;
+  fight.alpha     = 0
+  countDown       = 3
 
   player:play()
   enemy:play()
   fight:pause()
 
+  showInstructions()
+
   mte.update()
+end
+
+function startGame()
+
+  instructionBgL:removeSelf()
+  instructionBgR:removeSelf()
+  instructionCD:removeSelf()
 
   buttonLeftOverlay:addEventListener("touch", move)
   buttonRightOverlay:addEventListener("touch", move)
   Runtime:addEventListener("enterFrame", gameLoop)
+end
+
+function countDownTimer( event )
+
+  countDown = countDown - 1
+
+  instructionCD:setText(countDown)
+
+  if countDown < 1 then
+    startGame()
+  end
+end
+
+function showInstructions()
+
+  instructionBgL = display.newRect( 0, 0, vW / 2, vH )
+  instructionBgL:setFillColor( 229 / 256, 132 / 256, 28 / 256, 0.2 )
+  instructionBgL.anchorX = 0
+  instructionBgL.anchorY = 0
+
+  instructionBgR = display.newRect( vW / 2, 0, vW / 2, vH )
+  instructionBgR:setFillColor( 0, 0, 1, 0.2 )
+  instructionBgR.anchorX = 0
+  instructionBgR.anchorY = 0
+
+  instructionCD = TextCandy.CreateText({
+    fontName     = "Mecha Bold",             
+    x            = vW / 2,         
+    y            = 100,
+    text         = countDown,  
+    originX      = "CENTER",              
+    originY      = "TOP",             
+    textFlow     = "CENTER",
+    charSpacing  = 0,
+    lineSpacing  = 0,
+    wrapWidth    = 400,       
+    charBaseLine = "BOTTOM",
+    showOrigin   = false,
+    fontSize     = 40         
+  })
+  instructionCD:setColor(256 / 256, 256 / 256, 256 / 256)
+  instructionCD:addDropShadow(1, 1, 1)
+
+  timer.performWithDelay( 1000, countDownTimer, 3 )
 end
 
 function updateScore()
