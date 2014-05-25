@@ -57,7 +57,7 @@ mte.setCamera({ locX = 10, locY = 39, scale = scale, overDraw=1})
 
 TextCandy.AddCharset ("DIGITS", "digits", "digits.png", "1234567890.m", 40)
 TextCandy.AddVectorFont("Mecha", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
-TextCandy.AddVectorFont("Covered By Your Grace", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+TextCandy.AddVectorFont("Covered By Your Grace", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 60)
 
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
@@ -153,20 +153,20 @@ function showInstructions()
     textFlow     = "CENTER",
     charSpacing  = 0,
     lineSpacing  = 0,
-    wrapWidth    = 400,       
+    wrapWidth    = 20,       
     charBaseLine = "BOTTOM",
     showOrigin   = false,
-    fontSize     = 80         
+    fontSize     = 300         
   })
   instructionCD:setColor(256 / 256, 256 / 256, 256 / 256)
   instructionCD:addDropShadow(1, 1, 1)
 
   instructionTextL = TextCandy.CreateText({
     fontName     = "Covered By Your Grace",             
-    x            = 20,         
-    y            = 200,
+    x            = display.screenOriginX + vW /4,         
+    y            = 500,
     text         = 'Tap or hold to \nturn left',  
-    originX      = "LEFT",              
+    originX      = "CENTER",              
     originY      = "TOP",             
     textFlow     = "CENTER",
     charSpacing  = 0,
@@ -174,17 +174,17 @@ function showInstructions()
     wrapWidth    = vW / 2 * 0.7,       
     charBaseLine = "BOTTOM",
     showOrigin   = false,
-    fontSize     = 20         
+    fontSize     = 60         
   })
   instructionTextL:setColor(256 / 256, 256 / 256, 256 / 256)
   instructionTextL:addDropShadow(1, 1, 1)
 
   instructionTextR = TextCandy.CreateText({
     fontName     = "Covered By Your Grace",             
-    x            = vW - 20,         
-    y            = 200,
+    x            = display.screenOriginX + (display.viewableContentWidth - vW /4),         
+    y            = 500,
     text         = 'Tap or hold to \nturn right',  
-    originX      = "RIGHT",              
+    originX      = "CENTER",              
     originY      = "TOP",             
     textFlow     = "CENTER",
     charSpacing  = 0,
@@ -192,7 +192,7 @@ function showInstructions()
     wrapWidth    = vW / 2 * 0.7,       
     charBaseLine = "BOTTOM",
     showOrigin   = false,
-    fontSize     = 20         
+    fontSize     = 60         
   })
   instructionTextR:setColor(256 / 256, 256 / 256, 256 / 256)
   instructionTextR:addDropShadow(1, 1, 1)

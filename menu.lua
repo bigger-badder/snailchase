@@ -3,9 +3,10 @@ local TextCandy = require("lib.lib_text_candy")
 TextCandy.AddCharset ("EXOBIG", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOMID", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOSMALL", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+TextCandy.AddCharset ("MechaBitmap", "mecha", "mecha.png", "0123456789ABCDEFGHIJKLMNOPRSTUVWXYZ:!", 30)
 TextCandy.AddVectorFont("Mecha", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 -- TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
-TextCandy.ScaleCharset('EXOBIG', 0.7)
+TextCandy.ScaleCharset('MechaBitmap', 0.2)
 TextCandy.ScaleCharset('EXOMID', 0.5)
 TextCandy.ScaleCharset('EXOSMALL', 0.3)
 -- add Corona's Storyboard module
@@ -46,78 +47,81 @@ function scene:createScene( event )
 	background.y = display.screenOriginY
 	group:insert(background)
 
-	local playBtn = display.newImage( "images/newGameBtn.png" )
-	playBtn.width = 146;
-	playBtn.height = 38;
+	local playBtn = display.newImage( "images/newGame.png" )
+	playBtn.width = 410;
+	playBtn.height = 93;
 	playBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	playBtn.y = display.screenOriginY + 270
+	playBtn.y = display.screenOriginY + 740
 	group:insert(playBtn)
 	playBtn:addEventListener("touch", startGame)
 
-	local soundBtn = display.newImage( "images/soundsOnBtn.png" )
-	soundBtn.width = 236;
-	soundBtn.height = 38;
-	soundBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	soundBtn.y = display.screenOriginY + 320
-	group:insert(soundBtn)
-	soundBtn:addEventListener("touch", myData.setSound)
+	--[[
+	local soundOnBtn = display.newImage( "images/turnOnSounds.png" )
+	soundOnBtn.width = 659;
+	soundOnBtn.height = 93;
+	soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	soundOnBtn.y = display.screenOriginY + 860
+	group:insert(soundOnBtn)
+	soundOnBtn:addEventListener("touch", myData.setSound)
+	--]]
 
-	local musicBtn = display.newImage( "images/musicOnBtn.png" )
-	musicBtn.width = 236;
-	musicBtn.height = 38;
-	musicBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	musicBtn.y = display.screenOriginY + 370
-	group:insert(musicBtn)
-	musicBtn:addEventListener("touch", myData.setMusic)
+	local soundOffBtn = display.newImage( "images/turnOffSounds.png" )
+	soundOffBtn.width = 659;
+	soundOffBtn.height = 93;
+	soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	soundOffBtn.y = display.screenOriginY + 860
+	group:insert(soundOffBtn)
+	soundOffBtn:addEventListener("touch", myData.setSound)
 
-	gameOverLabel = TextCandy.CreateText({
-		fontName     = "EXOMID", 						
-		x            = display.contentWidth / 2,						
-		y            = 0,
-		text         = "Score",	
-		originX      = "CENTER",							
-		originY      = "TOP",							
-		textFlow     = "CENTER",
-		charSpacing  = -5,
-		lineSpacing  = 0,
-		wrapWidth    = 400, 			
-		charBaseLine = "BOTTOM",
-		showOrigin 	 = false						
-	})
-	gameOverLabel.x = display.contentWidth * 0.5
-	gameOverLabel.y = display.contentHeight * 0.4
-	gameOverLabel.alpha = 0
+	--[[
+	local musicOnBtn = display.newImage( "images/turnOnMusic.png" )
+	musicOnBtn.width = 597;
+	musicOnBtn.height = 93;
+	musicOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	musicOnBtn.y = display.screenOriginY + 980
+	group:insert(musicOnBtn)
+	musicOnBtn:addEventListener("touch", myData.setMusic)
+	--]]
 
+	local musicOffBtn = display.newImage( "images/turnOffMusic.png" )
+	musicOffBtn.width = 597;
+	musicOffBtn.height = 93;
+	musicOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	musicOffBtn.y = display.screenOriginY + 980
+	group:insert(musicOffBtn)
+	musicOffBtn:addEventListener("touch", myData.setMusic)
 
 	scoreLabel = TextCandy.CreateText({
-		fontName     = "EXOMID", 						
+		fontName     = "MechaBitmap", 						
 		x            = display.contentWidth / 2,						
 		y            = 0,
-		text         = '',	
+		text         = 'HIGH SCORE : '..myData.currentHighScore,	
 		originX      = "CENTER",							
 		originY      = "TOP",							
 		textFlow     = "CENTER",
-		charSpacing  = -5,
+		charSpacing  = -40,
 		lineSpacing  = 0,
-		wrapWidth    = 400, 			
+		wrapWidth    = display.contentWidth, 			
 		charBaseLine = "BOTTOM",
 		showOrigin 	 = false						
 	})
-	scoreLabel.x = display.contentWidth * 0.5
-	scoreLabel.y = display.contentHeight * 0.5
-	scoreLabel.alpha = 0
+	scoreLabel.x = display.screenOriginX + ( display.contentWidth * 0.5 ) 
+	scoreLabel.y = ( display.screenOriginY + display.contentHeight ) - 150
+	--scoreLabel.alpha = 0
 
-	bestScoreLabel = display.newText(group, 'HIGH SCORE : '..myData.currentHighScore, 20, 20, "Mecha", 30 )
+	--[[
+	bestScoreLabel = display.newText(group, 'HIGH SCORE : '..myData.currentHighScore, 20, 20, "Mecha", 70 )
 	bestScoreLabel:setFillColor( 255 / 255, 255 / 255, 255 / 255 )
 	bestScoreLabel.x = display.contentWidth * 0.5
 	bestScoreLabel.y = display.contentHeight * 0.92
+	]]
 
 	group:insert( playBtn )
-	group:insert( gameOverLabel )
+	--group:insert( gameOverLabel )
 	group:insert( scoreLabel )
-	group:insert( bestScoreLabel )
+	--group:insert( bestScoreLabel )
 	group:insert( scoreLabel )
-	group:insert( gameOverLabel )
+	--group:insert( gameOverLabel )
 end
 
 function scene:destroyScene( event )
@@ -152,7 +156,7 @@ function scene:enterScene(event)
 		end
 	end
 
-	bestScoreLabel.text = 'HIGH SCORE : '..myData.currentHighScore
+	scoreLabel.text = 'HIGH SCORE : '..myData.currentHighScore
 end
 
 -- "createScene" event is dispatched if scene's view does not exist
