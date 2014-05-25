@@ -48,29 +48,49 @@ function scene:createScene( event )
 	background.y = display.screenOriginY
 	group:insert(background)
 
-	local playBtn = display.newImage( "images/newGameBtn.png" )
-	playBtn.width = 146;
-	playBtn.height = 38;
+	local playBtn = display.newImage( "images/newGame.png" )
+	playBtn.width = 410;
+	playBtn.height = 93;
 	playBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	playBtn.y = display.screenOriginY + 270
+	playBtn.y = display.screenOriginY + 740
 	group:insert(playBtn)
 	playBtn:addEventListener("touch", startGame)
 
-	local soundBtn = display.newImage( "images/soundsOnBtn.png" )
-	soundBtn.width = 236;
-	soundBtn.height = 38;
-	soundBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	soundBtn.y = display.screenOriginY + 320
-	group:insert(soundBtn)
-	soundBtn:addEventListener("touch", startGame)
+	--[[
+	local soundOnBtn = display.newImage( "images/turnOnSounds.png" )
+	soundOnBtn.width = 659;
+	soundOnBtn.height = 93;
+	soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	soundOnBtn.y = display.screenOriginY + 860
+	group:insert(soundOnBtn)
+	soundOnBtn:addEventListener("touch", startGame)
+	--]]
 
-	local musicBtn = display.newImage( "images/musicOnBtn.png" )
-	musicBtn.width = 236;
-	musicBtn.height = 38;
-	musicBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	musicBtn.y = display.screenOriginY + 370
-	group:insert(musicBtn)
-	musicBtn:addEventListener("touch", startGame)
+	local soundOffBtn = display.newImage( "images/turnOffSounds.png" )
+	soundOffBtn.width = 659;
+	soundOffBtn.height = 93;
+	soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	soundOffBtn.y = display.screenOriginY + 860
+	group:insert(soundOffBtn)
+	soundOffBtn:addEventListener("touch", startGame)
+
+	--[[
+	local musicOnBtn = display.newImage( "images/turnOnMusic.png" )
+	musicOnBtn.width = 597;
+	musicOnBtn.height = 93;
+	musicOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	musicOnBtn.y = display.screenOriginY + 980
+	group:insert(musicOnBtn)
+	musicOnBtn:addEventListener("touch", startGame)
+	--]]
+
+	local musicOffBtn = display.newImage( "images/turnOffMusic.png" )
+	musicOffBtn.width = 597;
+	musicOffBtn.height = 93;
+	musicOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	musicOffBtn.y = display.screenOriginY + 980
+	group:insert(musicOffBtn)
+	musicOffBtn:addEventListener("touch", startGame)
 
 	gameOverLabel = TextCandy.CreateText({
 		fontName     = "EXOMID", 						
