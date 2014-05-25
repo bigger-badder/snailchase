@@ -145,8 +145,8 @@ function showInstructions()
 
   instructionCD = TextCandy.CreateText({
     fontName     = "Mecha",             
-    x            = vW / 2,         
-    y            = 80,
+    x            = display.screenOriginX + vW / 2,         
+    y            = display.screenOriginY + 200,
     text         = countDown,  
     originX      = "CENTER",              
     originY      = "TOP",             
@@ -297,67 +297,92 @@ function displayGameOver()
   gameOverBg = display.newRect( display.screenOriginX + vW / 2, display.screenOriginY + vH / 2, vW, vH )
   gameOverBg:setFillColor( 0, 0.4 )
 
-  restartBtn = TextCandy.CreateText({
-    fontName     = "Mecha",             
-    x            = vW / 2,         
-    y            = vH - 150,
-    text         = "RESTART",  
-    originX      = "CENTER",              
-    originY      = "TOP",             
-    textFlow     = "CENTER",
-    charSpacing  = 0,
-    lineSpacing  = 0,
-    wrapWidth    = 400,       
-    charBaseLine = "BOTTOM",
-    showOrigin   = false,
-    fontSize     = 40         
-  })
+  restartBtn = display.newImage( 'images/restart.png', {width=359, height=93} )
+  restartBtn.x = display.screenOriginX + vW / 2
+  restartBtn.y = display.screenOriginY + vH  - 150
+  restartBtn.anchorX = 0.5
+  restartBtn.anchorY = 0
   restartBtn:addEventListener("touch", restartGame)
-  restartBtn:setColor(256 / 256, 256 / 256, 256 / 256)
-  restartBtn:addDropShadow(1, 1, 1)
 
   gameOverText = display.newImage( 'images/gameOver.png' )
-  gameOverText.x = vW / 2
+  gameOverText.x = display.screenOriginX + vW / 2
   gameOverText.y = 50
   gameOverText:scale( 0.7, 0.7 )
   gameOverText.anchorX = 0.5
   gameOverText.anchorY = 0
 
-  gameOverScore = TextCandy.CreateText({
-    fontName     = "Mecha",             
-    x            = display.contentWidth / 2,            
-    y            = 400,
-    text         = "SCORE  " .. score .. 'm',  
-    originX      = "CENTER",              
-    originY      = "TOP",             
-    textFlow     = "CENTER",
-    charSpacing  = 13,
-    lineSpacing  = 0,
-    wrapWidth    = 400,       
-    charBaseLine = "BOTTOM",
-    showOrigin   = false,
-    fontSize     = 100         
-  })
-  gameOverScore:setColor(256 / 256, 256 / 256, 256 / 256)
-  gameOverScore:addDropShadow(1, 1, 1)
+  if(score > myData.currentHighScore) then
 
-  gameOverHS = TextCandy.CreateText({
-    fontName     = "Mecha",             
-    x            = display.contentWidth / 2,            
-    y            = 240,
-    text         = "HIGHSCORE  " .. myData.currentHighScore,  
-    originX      = "CENTER",              
-    originY      = "TOP",             
-    textFlow     = "CENTER",
-    charSpacing  = -12,
-    lineSpacing  = 0,
-    wrapWidth    = 400,       
-    charBaseLine = "BOTTOM",
-    showOrigin   = false,
-    fontSize     = 20         
-  })
-  gameOverHS:setColor(256 / 256, 256 / 256, 256 / 256)
-  gameOverHS:addDropShadow(1, 1, 1)
+	  gameOverScoreImg = display.newImage( 'images/newHighScore.png' )
+	  gameOverScoreImg.x = display.screenOriginX + vW / 2
+	  gameOverScoreImg.y = (display.screenOriginY + vH / 2) - 160
+	  gameOverScoreImg.anchorX = 0.5
+	  gameOverScoreImg.anchorY = 0
+
+	  gameOverHS = TextCandy.CreateText({
+	    fontName     = "Mecha",             
+	    x            = display.screenOriginX + display.contentWidth / 2,            
+	    y            = gameOverScoreImg.y + 125,
+	    text         = score .. 'm',
+	    originX      = "CENTER",              
+	    originY      = "TOP",             
+	    textFlow     = "CENTER",
+	    charSpacing  = 45,
+	    lineSpacing  = 0,
+	    wrapWidth    = 400,       
+	    charBaseLine = "BOTTOM",
+	    showOrigin   = false,
+	    fontSize     = 80         
+	  })
+	  gameOverHS:setColor(256 / 256, 256 / 256, 256 / 256)
+	  gameOverHS:addDropShadow(1, 1, 1)
+
+  else
+
+	  gameOverScoreImg = display.newImage( 'images/score.png', {width=540, height=353} )
+	  gameOverScoreImg.x = display.screenOriginX + vW / 2
+	  gameOverScoreImg.y = (display.screenOriginY + vH / 2) - 160
+	  gameOverScoreImg.anchorX = 0.5
+	  gameOverScoreImg.anchorY = 0
+
+	  gameOverScore = TextCandy.CreateText({
+	    fontName     = "Mecha",             
+	    x            = (display.screenOriginX + display.contentWidth / 2) + 90,            
+	    y            = gameOverScoreImg.y + 100,
+	    text         = score .. 'm',  
+	    originX      = "CENTER",              
+	    originY      = "TOP",             
+	    textFlow     = "CENTER",
+	    charSpacing  = 10,
+	    lineSpacing  = 0,
+	    wrapWidth    = 400,       
+	    charBaseLine = "CENTER",
+	    showOrigin   = false,
+	    fontSize     = 80         
+	  })
+	  gameOverScore:setColor(256 / 256, 256 / 256, 256 / 256)
+	  gameOverScore:addDropShadow(1, 1, 1)
+
+	  highScoreText = TextCandy.CreateText({
+	    fontName     = "Mecha",             
+	    x            = (display.screenOriginX + display.contentWidth / 2) + 200,            
+	    y            = gameOverScoreImg.y + 215,
+	    text         = myData.currentHighScore .. 'm',  
+	    originX      = "CENTER",              
+	    originY      = "TOP",             
+	    textFlow     = "CENTER",
+	    charSpacing  = 10,
+	    lineSpacing  = 0,
+	    wrapWidth    = 400,       
+	    charBaseLine = "CENTER",
+	    showOrigin   = false,
+	    fontSize     = 80         
+	  })
+	  highScoreText:setColor(256 / 256, 256 / 256, 256 / 256)
+	  highScoreText:addDropShadow(1, 1, 1)
+
+  end
+
 end
 
 function gameover()
@@ -502,12 +527,13 @@ function scene:createScene( event )
   scoreText = TextCandy.CreateText({
     fontName     = "Mecha",            
     x            = display.screenOriginX + vW / 2,            
-    y            = display.screenOriginY + 40,
-    text         = "0.0m",  
+    y            = display.screenOriginY + 100,
+    text         = "0m",  
     originX      = "CENTER",              
     originY      = "BOTTOM",             
     textFlow     = "CENTER",
-    charSpacing  = 0,
+    fontSize	 = 150,
+    charSpacing  = 45,
     lineSpacing  = 0,
     wrapWidth    = 400,       
     charBaseLine = "BOTTOM",
@@ -557,11 +583,27 @@ function scene:exitScene( event )
   
   -----------------------------------------------------------------------------
 
-  restartBtn:removeSelf()
-  gameOverBg:removeSelf()
-  gameOverText:removeSelf()
-  gameOverScore:removeSelf()
-  gameOverHS:removeSelf()
+  if(highScoreText)then
+  	highScoreText:removeSelf()
+  end
+  if(restartBtn)then
+  	restartBtn:removeSelf()
+  end
+    if(gameOverBg)then
+  	gameOverBg:removeSelf()
+  end
+    if(gameOverText)then
+  	gameOverText:removeSelf()
+  end
+    if(gameOverScore)then
+  	gameOverScore:removeSelf()
+  end
+  if(gameOverScoreImg)then
+  	gameOverScoreImg:removeSelf()
+  end
+  if(gameOverHS)then
+  	gameOverHS:removeSelf()
+  end
   
 end
 
