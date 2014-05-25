@@ -51,7 +51,7 @@ mte.physics.start()
 mte.physics.setGravity(0, 0)
 mte.loadMap("map2.tmx")
 mte.drawObjects()
-mte.setCamera({ locX = 10, locY = 39, scale = scale})
+mte.setCamera({ locX = 10, locY = 39, scale = scale, overDraw=1})
 
 TextCandy.AddCharset ("DIGITS", "digits", "digits.png", "1234567890.m", 40)
 TextCandy.AddVectorFont("Mecha", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
@@ -68,9 +68,12 @@ function resetGame()
   print("adX : "..adX);
   print("adY : "..adY);
 
+  playMusic()
+  playWings()
+
   showAd( "banner", { x=adX, y=adY, interval=30, testMode=true } )
 
-  mte.setCamera({ locX = 11, locY = 96, scale = scale})
+  mte.setCamera({ locX = 11, locY = 96, scale = scale, overDraw=1})
   
   score           = 0  
   direction       = 0
@@ -273,6 +276,13 @@ end
 
 function gameover()
   
+  stopMusic()
+  stopWings()
+
+  playSound ("scream")
+
+  playSound ("fight")
+
   Runtime:removeEventListener("enterFrame", gameLoop)
 
   fight.x = player.x
@@ -284,6 +294,7 @@ function gameover()
   enemy.alpha = 0
 
   local function onTimeOut()
+
     myData.score    = score
     myData.gameOver = true
 
@@ -304,7 +315,7 @@ function gameover()
     displayGameOver()
   end
 
-  timer.performWithDelay( 1000, onTimeOut )
+  timer.performWithDelay( 1500, onTimeOut )
 
 end
 
@@ -436,6 +447,7 @@ function scene:enterScene( event )
 	buttonRightOverlay:addEventListener("touch", move)
 	Runtime:addEventListener("enterFrame", gameLoop)
 --]]
+
   local group = self.view
   
   -----------------------------------------------------------------------------

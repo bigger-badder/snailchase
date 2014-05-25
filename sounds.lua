@@ -14,9 +14,9 @@ playSound = function(soundName)
 	if soundName == "fight" then 
 		fightChannel = audio.play( fightSound );
     elseif soundName == "scream" then 
-    	screamChannel = audio.play( fightSound );
+    	screamChannel = audio.play( screamSound );
 	elseif soundName == "wing" then 
-		fightChannel = audio.play( fightSound );
+		wingChannel = audio.play( wingSound );
 	end
 
 end;
@@ -24,24 +24,35 @@ end;
 
 -- Streams
 
-local backgroundMusic = audio.loadStream( "music.mp3" );
-local backgroundMusicChannel;
+backgroundMusic = audio.loadStream( "music.mp3" );
+backgroundMusicChannel = nil;
 
 playMusic = function()
-	backgroundMusicChannel = audio.play( backgroundMusic, { channel=1, loops=-1, fadein=5000 } )
+	print("play music")
+	--audio.rewind( backgroundMusic )
+	--backgroundMusicChannel = audio.play( backgroundMusic, { channel=1, loops=-1, fadein=5000 } )
+
 end;
 
 stopMusic = function()
-	audio.pause(backgroundMusicChannel);
+	print("stop music")
+	--audio.stop(backgroundMusicChannel);
 end;
 
 
 
--- Play the background music on channel 1, loop infinitely, and fade in over 5 seconds 
-local backgroundMusicChannel = audio.play( backgroundMusic, { channel=1, loops=-1, fadein=5000 } )
+wingsSounds = audio.loadStream( "sound-wing.wav" );
+wingsSoundsChannel = nil;
 
--- Play the speech on any available channel, for 30 seconds at most, and invoke listener function when audio finishes
-local narrationChannel = audio.play( narrationSpeech, { duration=30000, onComplete=narrationFinished } )
+playWings = function()
+	print("play wings")
+	audio.rewind( wingsSounds )
+	wingsSoundsChannel = audio.play( wingsSounds, { channel=1, loops=-1 } )
 
--- Play the laser on any available channel
-local laserChannel = audio.play( laserSound )
+end;
+
+stopWings = function()
+	print("stop wings")
+	audio.stop(wingsSoundsChannel);
+end;
+

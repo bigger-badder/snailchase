@@ -1,13 +1,17 @@
 -- App settings
 display.setStatusBar( display.HiddenStatusBar )
 
+-- fix for mte having small gaps between tiles
+display.setDefault("minTextureFilter", "nearest")
+display.setDefault("magTextureFilter", "nearest")
+
 local myData = require('myData')
 
 -- Load Corona 'ads' library
 ads = require "ads"
 
 local adsClass = require('adsClass')
---local sounds = require('sounds')
+local sounds = require('sounds')
 
 --Include sqlite
 local sqlite3 = require "sqlite3"
