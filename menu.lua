@@ -25,13 +25,39 @@ local bestScoreLabel
 local gameOverLabel
 local scoreLabel
 
+local musicOffBtn, musicOnBtn, soundOnBtn, soundOffBtn = nil
+
 local myData = require('myData')
 
 function startGame()
 	storyboard.gotoScene('game', 'slideLeft', 200)
 end
 
+function toggleMusicBtn( event )
 
+	myData.setMusic( event )
+
+	if myData.settings.musicOn == true then
+		musicOnBtn.alpha = 0
+		musicOffBtn.alpha = 1
+	else
+		musicOnBtn.alpha = 1
+		musicOffBtn.alpha = 0
+	end
+end
+
+function toggleSoundBtn( event )
+
+	myData.setSound( event )
+
+	if myData.settings.soundOn == true then
+		soundOnBtn.alpha = 0
+		soundOffBtn.alpha = 1
+	else
+		soundOnBtn.alpha = 1
+		soundOffBtn.alpha = 0
+	end
+end
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
@@ -48,48 +74,60 @@ function scene:createScene( event )
 	group:insert(background)
 
 	local playBtn = display.newImage( "images/newGame.png" )
-	playBtn.width = 328;
-	playBtn.height = 74;
+	playBtn.width = 410;
+	playBtn.height = 93;
 	playBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	playBtn.y = display.screenOriginY + (display.contentHeight / 2) + 200
+	playBtn.y = display.screenOriginY + (display.contentHeight / 2) + 160
 	group:insert(playBtn)
 	playBtn:addEventListener("touch", startGame)
 
-	--[[
-	local soundOnBtn = display.newImage( "images/turnOnSounds.png" )
-	soundOnBtn.width = 659;
-	soundOnBtn.height = 93;
-	soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	soundOnBtn.y = display.screenOriginY + 860
-	group:insert(soundOnBtn)
-	soundOnBtn:addEventListener("touch", myData.setSound)
-	--]]
+	soundOnBtn = display.newImage( "images/turnOnSounds.png" )
+		soundOnBtn.width = 659;
+		soundOnBtn.height = 93;
+		soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
+		soundOnBtn.y = display.screenOriginY + 860
+		group:insert(soundOnBtn)
+		soundOnBtn:addEventListener("touch", toggleSoundBtn)
 
-	local soundOffBtn = display.newImage( "images/turnOffSounds.png" )
-	soundOffBtn.width = 527;
-	soundOffBtn.height = 74;
-	soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	soundOffBtn.y = playBtn.y + 100
-	group:insert(soundOffBtn)
-	soundOffBtn:addEventListener("touch", myData.setSound)
+	soundOffBtn = display.newImage( "images/turnOffSounds.png" )
+		soundOffBtn.width = 709;
+		soundOffBtn.height = 93;
+		soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
+		soundOffBtn.y = display.screenOriginY + 860
+		group:insert(soundOffBtn)
+		soundOffBtn:addEventListener("touch", toggleSoundBtn)
 
-	--[[
-	local musicOnBtn = display.newImage( "images/turnOnMusic.png" )
-	musicOnBtn.width = 597;
-	musicOnBtn.height = 93;
-	musicOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	musicOnBtn.y = display.screenOriginY + 980
-	group:insert(musicOnBtn)
-	musicOnBtn:addEventListener("touch", myData.setMusic)
-	--]]
+	if myData.settings.soundOn == true then
+		soundOnBtn.alpha  = 0
+		soundOffBtn.alpha = 1
+	else
+		soundOnBtn.alpha  = 1
+		soundOffBtn.alpha = 0
+	end
 
-	local musicOffBtn = display.newImage( "images/turnOffMusic.png" )
-	musicOffBtn.width = 478;
-	musicOffBtn.height = 74;
-	musicOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	musicOffBtn.y = soundOffBtn.y + 100
-	group:insert(musicOffBtn)
-	musicOffBtn:addEventListener("touch", myData.setMusic)
+	musicOnBtn = display.newImage( "images/turnOnMusic.png" )
+		musicOnBtn.width = 597;
+		musicOnBtn.height = 93;
+		musicOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
+		musicOnBtn.y = soundOffBtn.y + 100
+		group:insert(musicOnBtn)
+		musicOnBtn:addEventListener("touch", toggleMusicBtn)
+
+	musicOffBtn = display.newImage( "images/turnOffMusic.png" )
+		musicOffBtn.width = 647;
+		musicOffBtn.height = 93;
+		musicOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
+		musicOffBtn.y = soundOffBtn.y + 100
+		group:insert(musicOffBtn)
+		musicOffBtn:addEventListener("touch", toggleMusicBtn)
+
+	if myData.settings.musicOn == true then
+		musicOnBtn.alpha  = 0
+		musicOffBtn.alpha = 1
+	else
+		musicOnBtn.alpha  = 1
+		musicOffBtn.alpha = 0
+	end
 
 	scoreLabel = TextCandy.CreateText({
 		fontName     = "Mecha", 						
