@@ -171,7 +171,7 @@ function showInstructions()
     textFlow     = "CENTER",
     charSpacing  = 0,
     lineSpacing  = 0,
-    wrapWidth    = vW / 2 * 0.7,       
+    wrapWidth    = vW / 2 * 0.8,       
     charBaseLine = "BOTTOM",
     showOrigin   = false,
     fontSize     = 60         
@@ -189,7 +189,7 @@ function showInstructions()
     textFlow     = "CENTER",
     charSpacing  = 0,
     lineSpacing  = 0,
-    wrapWidth    = vW / 2 * 0.7,       
+    wrapWidth    = vW / 2 * 0.8,       
     charBaseLine = "BOTTOM",
     showOrigin   = false,
     fontSize     = 60         
@@ -299,7 +299,7 @@ function displayGameOver()
 
   restartBtn = display.newImage( 'images/restart.png', {width=359, height=93} )
   restartBtn.x = display.screenOriginX + vW / 2
-  restartBtn.y = display.screenOriginY + vH  - 150
+  restartBtn.y = (display.screenOriginY + vH)  - 250
   restartBtn.anchorX = 0.5
   restartBtn.anchorY = 0
   restartBtn:addEventListener("touch", restartGame)
@@ -311,7 +311,9 @@ function displayGameOver()
   gameOverText.anchorX = 0.5
   gameOverText.anchorY = 0
 
-  if(score > myData.currentHighScore) then
+  if(score > myData.settings.highscore) then
+
+      myData.setHighscore(myData.score)
 
 	  gameOverScoreImg = display.newImage( 'images/newHighScore.png' )
 	  gameOverScoreImg.x = display.screenOriginX + vW / 2
@@ -327,7 +329,7 @@ function displayGameOver()
 	    originX      = "CENTER",              
 	    originY      = "TOP",             
 	    textFlow     = "CENTER",
-	    charSpacing  = 45,
+	    charSpacing  = 10,
 	    lineSpacing  = 0,
 	    wrapWidth    = 400,       
 	    charBaseLine = "BOTTOM",
@@ -367,7 +369,7 @@ function displayGameOver()
 	    fontName     = "Mecha",             
 	    x            = (display.screenOriginX + display.contentWidth / 2) + 200,            
 	    y            = gameOverScoreImg.y + 215,
-	    text         = myData.currentHighScore .. 'm',  
+	    text         = myData.settings.highscore .. 'm',  
 	    originX      = "CENTER",              
 	    originY      = "TOP",             
 	    textFlow     = "CENTER",
@@ -382,6 +384,7 @@ function displayGameOver()
 	  highScoreText:addDropShadow(1, 1, 1)
 
   end
+
 
 end
 
@@ -413,13 +416,6 @@ function gameover()
     player:pause()
     enemy:pause()
 
-    -- save highscore
-    local tablefill = [[INSERT INTO highscore VALUES (NULL, ']]..myData.score..[['); ]]
-    myData.db:exec( tablefill )
-
-    if myData.score > myData.currentHighScore then
-      myData.currentHighScore = myData.score
-    end
 
     scoreText.alpha = 0
 
