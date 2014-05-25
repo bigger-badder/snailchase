@@ -39,7 +39,7 @@ local countDown                                            = 3
 local thisGroup                                            = nil
 local player, enemy, fight, buttonLeftOverlay, buttonRightOverlay = nil
 local restartBtn, gameOverBg, gameOverText, gameOverScore, gameOverHS = nil
-local instructionBgL, instructionBgR, instructionCD = nil
+local instructionBgL, instructionBgR, instructionCD, instructionTextL, instructionTextR = nil
 
 vW    = display.viewableContentWidth
 vH    = display.viewableContentHeight
@@ -57,6 +57,7 @@ mte.setCamera({ locX = 10, locY = 39, scale = scale})
 
 TextCandy.AddCharset ("DIGITS", "digits", "digits.png", "1234567890.m", 40)
 TextCandy.AddVectorFont("Mecha", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
+TextCandy.AddVectorFont("Covered By Your Grace", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 
 ---------------------------------------------------------------------------------
 -- BEGINNING OF YOUR IMPLEMENTATION
@@ -85,9 +86,9 @@ function resetGame()
   enemy.y         = mte.locToLevelPosY(106, mte.getSpriteLayer(1))
   enemy.alpha     = 1
   lastTileY       = 96
-  scoreText.alpha = 1
   fight.alpha     = 0
   countDown       = 3
+  scoreText.alpha = 0
 
   player:play()
   enemy:play()
@@ -103,6 +104,10 @@ function startGame()
   instructionBgL:removeSelf()
   instructionBgR:removeSelf()
   instructionCD:removeSelf()
+  instructionTextL:removeSelf()
+  instructionTextR:removeSelf()
+
+  scoreText.alpha = 1
 
   buttonLeftOverlay:addEventListener("touch", move)
   buttonRightOverlay:addEventListener("touch", move)
@@ -133,9 +138,9 @@ function showInstructions()
   instructionBgR.anchorY = 0
 
   instructionCD = TextCandy.CreateText({
-    fontName     = "Mecha Bold",             
+    fontName     = "Mecha",             
     x            = vW / 2,         
-    y            = 100,
+    y            = 80,
     text         = countDown,  
     originX      = "CENTER",              
     originY      = "TOP",             
@@ -145,10 +150,46 @@ function showInstructions()
     wrapWidth    = 400,       
     charBaseLine = "BOTTOM",
     showOrigin   = false,
-    fontSize     = 40         
+    fontSize     = 80         
   })
   instructionCD:setColor(256 / 256, 256 / 256, 256 / 256)
   instructionCD:addDropShadow(1, 1, 1)
+
+  instructionTextL = TextCandy.CreateText({
+    fontName     = "Covered By Your Grace",             
+    x            = 20,         
+    y            = 200,
+    text         = 'Tap or hold to \nturn left',  
+    originX      = "LEFT",              
+    originY      = "TOP",             
+    textFlow     = "CENTER",
+    charSpacing  = 0,
+    lineSpacing  = 0,
+    wrapWidth    = vW / 2 * 0.7,       
+    charBaseLine = "BOTTOM",
+    showOrigin   = false,
+    fontSize     = 20         
+  })
+  instructionTextL:setColor(256 / 256, 256 / 256, 256 / 256)
+  instructionTextL:addDropShadow(1, 1, 1)
+
+  instructionTextR = TextCandy.CreateText({
+    fontName     = "Covered By Your Grace",             
+    x            = vW - 20,         
+    y            = 200,
+    text         = 'Tap or hold to \nturn right',  
+    originX      = "RIGHT",              
+    originY      = "TOP",             
+    textFlow     = "CENTER",
+    charSpacing  = 0,
+    lineSpacing  = 0,
+    wrapWidth    = vW / 2 * 0.7,       
+    charBaseLine = "BOTTOM",
+    showOrigin   = false,
+    fontSize     = 20         
+  })
+  instructionTextR:setColor(256 / 256, 256 / 256, 256 / 256)
+  instructionTextR:addDropShadow(1, 1, 1)
 
   timer.performWithDelay( 1000, countDownTimer, 3 )
 end
@@ -458,7 +499,7 @@ function scene:createScene( event )
   scoreText = TextCandy.CreateText({
     fontName     = "Mecha",            
     x            = display.screenOriginX + vW / 2,            
-    y            = display.screenOriginY + 20,
+    y            = display.screenOriginY + 40,
     text         = "0.0m",  
     originX      = "CENTER",              
     originY      = "BOTTOM",             
