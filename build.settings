@@ -13,7 +13,7 @@ settings =
 			UIApplicationExitsOnSuspend = true,
             UIAppFonts =
             {
-                "AllerDisplay.ttf"
+                "Mecha_Bold.ttf"
             },
             UIApplicationExitsOnSuspend = true
         },

@@ -3,7 +3,8 @@ local TextCandy = require("lib.lib_text_candy")
 TextCandy.AddCharset ("EXOBIG", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOMID", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
 TextCandy.AddCharset ("EXOSMALL", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
-TextCandy.AddVectorFont("Aller Display", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
+TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
+TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 TextCandy.ScaleCharset('EXOBIG', 0.7)
 TextCandy.ScaleCharset('EXOMID', 0.5)
 TextCandy.ScaleCharset('EXOSMALL', 0.3)
@@ -38,46 +39,38 @@ function scene:createScene( event )
 	local group = self.view
 
 	-- background should appear behind all scenes
-	local background = display.newImage( "menuBG.png" )
+	local background = display.newImage( "images/menuBG.png" )
 	background.width = display.contentWidth
 	background.height = display.contentHeight
 	background.anchorX = 0
 	background.anchorY = 0
-	background.x = 0
-	background.y = 0
+	background.x = display.screenOriginX
+	background.y = display.screenOriginY
 	group:insert(background)
 
-	local playBtn = TextCandy.CreateText({
-		fontName     = "Aller Display", 						
-		x            = display.contentWidth / 2,						
-		y            = display.contentHeight - 180,
-		text         = "PLAY",	
-		originX      = "CENTER",							
-		originY      = "TOP",							
-		textFlow     = "CENTER",
-		charSpacing  = 10,
-		lineSpacing  = 0,
-		wrapWidth    = 400, 			
-		charBaseLine = "BOTTOM",
-		showOrigin 	 = false,
-		fontSize     = 60					
-	})
-	playBtn:setColor(1, 1, 1)
-	--playBtn:addDropShadow(1, 1, 1)
-	playBtn:applyAnimation({
-		interval		= 1,
-		startNow		= true,
-		restartOnChange = true,
-		delay			= 0,
-		duration		= 0,
-		charWise		= false,
-		autoRemoveText  = false,
-		frequency 		= 250,
-		startAlpha		= 1,
-		alphaRange		= 0.5
-	})
+	local playBtn = display.newImage( "images/newGameBtn.png" )
+	playBtn.width = 146;
+	playBtn.height = 38;
+	playBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	playBtn.y = display.screenOriginY + 270
+	group:insert(playBtn)
 	playBtn:addEventListener("touch", startGame)
 
+	local soundBtn = display.newImage( "images/soundsOnBtn.png" )
+	soundBtn.width = 236;
+	soundBtn.height = 38;
+	soundBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	soundBtn.y = display.screenOriginY + 320
+	group:insert(soundBtn)
+	soundBtn:addEventListener("touch", startGame)
+
+	local musicBtn = display.newImage( "images/musicOnBtn.png" )
+	musicBtn.width = 236;
+	musicBtn.height = 38;
+	musicBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	musicBtn.y = display.screenOriginY + 370
+	group:insert(musicBtn)
+	musicBtn:addEventListener("touch", startGame)
 
 	gameOverLabel = TextCandy.CreateText({
 		fontName     = "EXOMID", 						
@@ -116,7 +109,7 @@ function scene:createScene( event )
 	scoreLabel.y = display.contentHeight * 0.5
 	scoreLabel.alpha = 0
 
-	bestScoreLabel = display.newText(group, 'BEST: '..myData.currentHighScore, 20, 20, "Aller Display", 20 )
+	bestScoreLabel = display.newText(group, 'HIGH SCORE : '..myData.currentHighScore, 20, 20, "Mecha Bold", 30 )
 	bestScoreLabel:setFillColor( 255 / 255, 255 / 255, 255 / 255 )
 	bestScoreLabel.x = display.contentWidth * 0.5
 	bestScoreLabel.y = display.contentHeight * 0.92
