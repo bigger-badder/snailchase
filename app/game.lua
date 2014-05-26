@@ -134,12 +134,12 @@ end
 function showInstructions()
 
   instructionBgL = display.newRect( 0, 0, vW / 2, vH )
-  instructionBgL:setFillColor( 229 / 256, 132 / 256, 28 / 256, 0.2 )
+  instructionBgL:setFillColor( 178 / 256, 0 / 256, 0 / 256, 0.3 )
   instructionBgL.anchorX = 0
   instructionBgL.anchorY = 0
 
   instructionBgR = display.newRect( vW / 2, 0, vW / 2, vH )
-  instructionBgR:setFillColor( 0, 0, 1, 0.2 )
+  instructionBgR:setFillColor( 0, 0, 1, 0.3 )
   instructionBgR.anchorX = 0
   instructionBgR.anchorY = 0
 
@@ -350,7 +350,7 @@ function displayGameOver()
 	  gameOverScore = TextCandy.CreateText({
 	    fontName     = "Mecha",             
 	    x            = (display.screenOriginX + display.contentWidth / 2) + 90,            
-	    y            = gameOverScoreImg.y + 107,
+	    y            = gameOverScoreImg.y + 102,
 	    text         = score .. 'm',  
 	    originX      = "CENTER",              
 	    originY      = "TOP",             
@@ -368,7 +368,7 @@ function displayGameOver()
 	  highScoreText = TextCandy.CreateText({
 	    fontName     = "Mecha",             
 	    x            = (display.screenOriginX + display.contentWidth / 2) + 200,            
-	    y            = gameOverScoreImg.y + 222,
+	    y            = gameOverScoreImg.y + 215,
 	    text         = myData.settings.highscore .. 'm',  
 	    originX      = "CENTER",              
 	    originY      = "TOP",             
