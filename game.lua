@@ -85,11 +85,11 @@ function resetGame()
   xForce          = 0
   yForce          = 0  
   player.x        = mte.locToLevelPosX(11, mte.getSpriteLayer(1))
-  player.y        = mte.locToLevelPosY(96, mte.getSpriteLayer(1))
+  player.y        = mte.locToLevelPosY(146, mte.getSpriteLayer(1))
   player.rotation = 0  
   player.alpha     = 1
   enemy.x         = mte.locToLevelPosX(11, mte.getSpriteLayer(1))
-  enemy.y         = mte.locToLevelPosY(106, mte.getSpriteLayer(1))
+  enemy.y         = mte.locToLevelPosY(156, mte.getSpriteLayer(1))
   enemy.alpha     = 1
   lastTileY       = 96
   fight.alpha     = 0
@@ -468,8 +468,8 @@ function scene:createScene( event )
     layer =  mte.getSpriteLayer(1), 
     locX = 11, 
     locY = 96,
-    levelWidth = 114,
-    levelHeight = 240,
+    levelWidth = 90,
+    levelHeight = 190,
     name = "player"
   }
 
