@@ -350,7 +350,7 @@ function displayGameOver()
 	  gameOverScore = TextCandy.CreateText({
 	    fontName     = "Mecha",             
 	    x            = (display.screenOriginX + display.contentWidth / 2) + 90,            
-	    y            = gameOverScoreImg.y + 100,
+	    y            = gameOverScoreImg.y + 107,
 	    text         = score .. 'm',  
 	    originX      = "CENTER",              
 	    originY      = "TOP",             
@@ -368,7 +368,7 @@ function displayGameOver()
 	  highScoreText = TextCandy.CreateText({
 	    fontName     = "Mecha",             
 	    x            = (display.screenOriginX + display.contentWidth / 2) + 200,            
-	    y            = gameOverScoreImg.y + 215,
+	    y            = gameOverScoreImg.y + 222,
 	    text         = myData.settings.highscore .. 'm',  
 	    originX      = "CENTER",              
 	    originY      = "TOP",             
