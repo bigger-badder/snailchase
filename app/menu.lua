@@ -44,6 +44,9 @@ function toggleMusicBtn( event )
 		musicOnBtn.alpha = 1
 		musicOffBtn.alpha = 0
 	end
+
+	return true
+
 end
 
 function toggleSoundBtn( event )
@@ -61,7 +64,11 @@ end
 
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
+
 	local group = self.view
+
+	group.x = display.screenOriginX
+	group.y = display.screenOriginY
 
 	-- background should appear behind all scenes
 	local background = display.newImage( "images/menuBG.png" )
@@ -79,23 +86,23 @@ function scene:createScene( event )
 	playBtn.x = display.screenOriginX + (display.contentWidth / 2)
 	playBtn.y = display.screenOriginY + (display.contentHeight / 2) + 160
 	group:insert(playBtn)
-	playBtn:addEventListener("touch", startGame)
+	playBtn:addEventListener("tap", startGame)
 
 	soundOnBtn = display.newImage( "images/turnOnSounds.png" )
-		soundOnBtn.width = 395;
-		soundOnBtn.height = 56;
-		soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
-		soundOnBtn.y = playBtn.y + 200
-		group:insert(soundOnBtn)
-		soundOnBtn:addEventListener("touch", toggleSoundBtn)
+	soundOnBtn.width = 395;
+	soundOnBtn.height = 56;
+	soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	soundOnBtn.y = playBtn.y + 200
+	group:insert(soundOnBtn)
+	soundOnBtn:addEventListener("tap", toggleSoundBtn)
 
 	soundOffBtn = display.newImage( "images/turnOffSounds.png" )
-		soundOffBtn.width = 425;
-		soundOffBtn.height = 56;
-		soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-		soundOffBtn.y = playBtn.y + 200
-		group:insert(soundOffBtn)
-		soundOffBtn:addEventListener("touch", toggleSoundBtn)
+	soundOffBtn.width = 425;
+	soundOffBtn.height = 56;
+	soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
+	soundOffBtn.y = playBtn.y + 200
+	group:insert(soundOffBtn)
+	soundOffBtn:addEventListener("tap", toggleSoundBtn)
 
 	if myData.settings.soundOn == true then
 		soundOnBtn.alpha  = 0
@@ -105,21 +112,26 @@ function scene:createScene( event )
 		soundOffBtn.alpha = 0
 	end
 
-	musicOnBtn = display.newImage( "images/turnOnMusic.png" )
-		musicOnBtn.width = 358;
-		musicOnBtn.height = 56;
-		musicOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
-		musicOnBtn.y = playBtn.y + 280
-		group:insert(musicOnBtn)
-		musicOnBtn:addEventListener("touch", toggleMusicBtn)
+	local xPos = (display.screenOriginX + (display.contentWidth / 2))
+	local yPos = playBtn.y + 300
+	musicOnBtn = display.newImage( "images/turnOnMusic.png", xPos, yPos, true )
+	--musicOnBtn.anchorX = 0
+	--musicOnBtn.anchorY = 0
+	musicOnBtn.width = 358;
+	musicOnBtn.height = 56;
+	group:insert(musicOnBtn)
+	musicOnBtn:addEventListener("tap", toggleMusicBtn)
 
-	musicOffBtn = display.newImage( "images/turnOffMusic.png" )
-		musicOffBtn.width = 388;
-		musicOffBtn.height = 56;
-		musicOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-		musicOffBtn.y = playBtn.y + 280
-		group:insert(musicOffBtn)
-		musicOffBtn:addEventListener("touch", toggleMusicBtn)
+	local xPos = (display.screenOriginX + (display.contentWidth / 2))
+	local yPos = playBtn.y + 300
+	musicOffBtn = display.newImage( "images/turnOffMusic.png", xPos, yPos, true )
+	--musicOffBtn.anchorX = 0
+	--musicOffBtn.anchorY = 0
+	musicOffBtn.width = 388;
+	musicOffBtn.height = 56;
+	musicOffBtn:addEventListener("tap", toggleMusicBtn)
+	group:insert(musicOffBtn)
+
 
 	if myData.settings.musicOn == true then
 		musicOnBtn.alpha  = 0

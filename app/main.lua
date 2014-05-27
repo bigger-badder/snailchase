@@ -34,7 +34,7 @@ loadSettingsFile()
 function myData.setSound( event )
 
 	if event.phase ~= "began" then
-		return
+		--return
 	end
 
 	myData.settings.soundOn = not myData.settings.soundOn
@@ -45,7 +45,7 @@ end
 function myData.setMusic( event )
 
 	if event.phase ~= "began" then
-		return
+		--return
 	end
 
 	myData.settings.musicOn = not myData.settings.musicOn

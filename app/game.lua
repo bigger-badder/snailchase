@@ -116,7 +116,7 @@ function startGame()
   scoreText.alpha = 1
 
   buttonLeftOverlay:addEventListener("touch", move)
-  buttonRightOverlay:addEventListener("touch", move)
+  --buttonRightOverlay:addEventListener("touch", move)
   Runtime:addEventListener("enterFrame", gameLoop)
 end
 
@@ -206,17 +206,31 @@ end
 
 function move( event )
 
+  if event.phase == "ended" or event.phase == "cancelled" then
+    display.currentStage:setFocus(nil)
+    direction = 0
+    return
+  end
+
+  if( event.x > display.screenOriginX + (vW/2) )then
+    direction = -1
+  else
+    direction = 1
+  end
+
+  --[[
+
   if event.phase == "began" or event.phase == "moved" then
     if event.target == buttonLeftOverlay then
       direction = 1
     end
     if event.target == buttonRightOverlay then
-      direction = -1
+      
     end
-  elseif event.phase == "ended" or event.phase == "cancelled" then
-    display.currentStage:setFocus(nil)
-    direction = 0
-  end
+  else
+
+  --]]
+
 end
 
 function isRoad (locXRef, locYRef)
@@ -254,20 +268,20 @@ function gameLoop( event )
   local newForceY = -math.cos( math.rad(player.rotation) ) * accCoeff
 
   local diffX = newForceX - xForce 
-  xForce = xForce + (diffX / 2)
+  xForce = xForce + (diffX / 1)
   
   local diffY = newForceY - yForce
-  yForce = yForce + (diffY / 2)
+  yForce = yForce + (diffY / 1)
 
   player:applyForce(xForce, yForce, player.x, player.y)
   
   player.rotation = player.rotation + rotationDiff
   
   if direction < 0 then
-    rotationDiff = 5
+    rotationDiff = 8
   end
   if direction > 0 then
-    rotationDiff = -5
+    rotationDiff = -8
   end
   if direction == 0 then
     rotationDiff = 0
@@ -439,25 +453,27 @@ function scene:createScene( event )
   
   thisGroup = group;
 
-  buttonLeftOverlay = display.newRect(display.screenOriginX, display.screenOriginY, vW / 2, vH)
+
+  buttonLeftOverlay = display.newRect(display.screenOriginX, display.screenOriginY, vW, vH)
   buttonLeftOverlay.anchorX = 0;
   buttonLeftOverlay.anchorY = 0;
   buttonLeftOverlay:setFillColor( 0, 0, 0, 0.01)
+  group:insert( buttonLeftOverlay )
 
+  --[[
   buttonRightOverlay = display.newRect(display.screenOriginX + vW / 2, display.screenOriginY, vW / 2, vH)
   buttonRightOverlay.anchorX = 0;
   buttonRightOverlay.anchorY = 0;
   buttonRightOverlay:setFillColor( 0, 0, 0, 0.01 )
-
-  group:insert( buttonLeftOverlay )
   group:insert( buttonRightOverlay )
+  --]]
 
   --CREATE PLAYER SPRITE ------------------------------------------------------------
 
   local sheetInfo = require("snail")
   local myImageSheet = graphics.newImageSheet( "snail.png", sheetInfo:getSheet() )
   player = display.newSprite( myImageSheet , {frames={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}} )
-  mte.physics.addBody(player, "dynamic", {friction = 5, radius = 20, bounce = 1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
+  mte.physics.addBody(player, "dynamic", {friction = 0, radius = 20, bounce = 1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
   player.isFixedRotation = false
   player.linearDamping = 3
   player.angularDamping = 220
