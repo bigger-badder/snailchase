@@ -30,7 +30,7 @@ local musicOffBtn, musicOnBtn, soundOnBtn, soundOffBtn = nil
 local myData = require('myData')
 
 function startGame()
-	storyboard.gotoScene('game', 'slideLeft', 200)
+	storyboard.gotoScene('game')
 end
 
 function toggleMusicBtn( event )
