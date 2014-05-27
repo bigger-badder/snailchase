@@ -82,18 +82,18 @@ function scene:createScene( event )
 	playBtn:addEventListener("touch", startGame)
 
 	soundOnBtn = display.newImage( "images/turnOnSounds.png" )
-		soundOnBtn.width = 659;
-		soundOnBtn.height = 93;
+		soundOnBtn.width = 395;
+		soundOnBtn.height = 56;
 		soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
-		soundOnBtn.y = playBtn.y + 120
+		soundOnBtn.y = playBtn.y + 200
 		group:insert(soundOnBtn)
 		soundOnBtn:addEventListener("touch", toggleSoundBtn)
 
 	soundOffBtn = display.newImage( "images/turnOffSounds.png" )
-		soundOffBtn.width = 709;
-		soundOffBtn.height = 93;
+		soundOffBtn.width = 425;
+		soundOffBtn.height = 56;
 		soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-		soundOffBtn.y = playBtn.y + 120
+		soundOffBtn.y = playBtn.y + 200
 		group:insert(soundOffBtn)
 		soundOffBtn:addEventListener("touch", toggleSoundBtn)
 
@@ -106,18 +106,18 @@ function scene:createScene( event )
 	end
 
 	musicOnBtn = display.newImage( "images/turnOnMusic.png" )
-		musicOnBtn.width = 597;
-		musicOnBtn.height = 93;
+		musicOnBtn.width = 358;
+		musicOnBtn.height = 56;
 		musicOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
-		musicOnBtn.y = playBtn.y + 240
+		musicOnBtn.y = playBtn.y + 280
 		group:insert(musicOnBtn)
 		musicOnBtn:addEventListener("touch", toggleMusicBtn)
 
 	musicOffBtn = display.newImage( "images/turnOffMusic.png" )
-		musicOffBtn.width = 647;
-		musicOffBtn.height = 93;
+		musicOffBtn.width = 388;
+		musicOffBtn.height = 56;
 		musicOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-		musicOffBtn.y = playBtn.y + 240
+		musicOffBtn.y = playBtn.y + 280
 		group:insert(musicOffBtn)
 		musicOffBtn:addEventListener("touch", toggleMusicBtn)
 

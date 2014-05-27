@@ -74,7 +74,7 @@ function resetGame()
   playMusic()
   playWings()
 
-  showAd( "banner", { x=adX, y=adY, interval=30, testMode=true } )
+  showAd( "banner", { x=adX, y=adY, interval=30} )
 
   mte.setCamera({ locX = 11, locY = 96, scale = scale, overDraw=1})
   
@@ -457,7 +457,7 @@ function scene:createScene( event )
   local sheetInfo = require("snail")
   local myImageSheet = graphics.newImageSheet( "snail.png", sheetInfo:getSheet() )
   player = display.newSprite( myImageSheet , {frames={1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20}} )
-  mte.physics.addBody(player, "dynamic", {friction = 5, radius = 20, bounce = 1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
+  mte.physics.addBody(player, "dynamic", {friction = 2, radius = 20, bounce = 1, density = 1, filter = { categoryBits = 1, maskBits = 1 } })
   player.isFixedRotation = false
   player.linearDamping = 3
   player.angularDamping = 220
@@ -468,8 +468,8 @@ function scene:createScene( event )
     layer =  mte.getSpriteLayer(1), 
     locX = 11, 
     locY = 96,
-    levelWidth = 90,
-    levelHeight = 190,
+    levelWidth = 72,
+    levelHeight = 152,
     name = "player"
   }
 
