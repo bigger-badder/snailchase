@@ -21,11 +21,12 @@ local widget = require "widget"
 -- forward declarations for our level selection buttons
 -- needed to remove the buttons from the scene in destroyScene
 local playBtn
+local playBtnGroup
 local bestScoreLabel
 local gameOverLabel
 local scoreLabel
 
-local musicOffBtn, musicOnBtn, soundOnBtn, soundOffBtn = nil
+local musicOffBtn, musicOnBtn, musicGroup, soundOnBtn, soundGroup, soundOffBtn = nil
 
 local myData = require('myData')
 
@@ -50,6 +51,8 @@ function toggleMusicBtn( event )
 end
 
 function toggleSoundBtn( event )
+
+	print(event.phase)
 
 	myData.setSound( event )
 
@@ -80,29 +83,41 @@ function scene:createScene( event )
 	background.y = display.screenOriginY
 	group:insert(background)
 
-	local playBtn = display.newImage( "images/newGame.png" )
+	playBtnGroup = display.newGroup()
+	playBtnGroup.x = display.screenOriginX + (display.contentWidth / 2)
+	playBtnGroup.y = display.screenOriginY + (display.contentHeight / 2) + 160
+	group:insert(playBtnGroup)
+
+	local rect = display.newRect(0, 0, 450, 140)
+	rect:setFillColor( 0 )
+	playBtnGroup:insert(rect)
+
+	playBtn = display.newImage( "images/newGame.png" )
 	playBtn.width = 410;
 	playBtn.height = 93;
-	playBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	playBtn.y = display.screenOriginY + (display.contentHeight / 2) + 160
-	group:insert(playBtn)
-	playBtn:addEventListener("tap", startGame)
+	playBtnGroup:insert(playBtn)
+	playBtnGroup:addEventListener("tap", startGame)
+
+	soundGroup = display.newGroup()
+	soundGroup.x = display.screenOriginX + (display.contentWidth / 2)
+	soundGroup.y = playBtnGroup.y + 200
+	group:insert(soundGroup)
+
+	local rect = display.newRect(0, 0, 425, 120)
+	rect:setFillColor( 0 )
+	soundGroup:insert(rect)
 
 	soundOnBtn = display.newImage( "images/turnOnSounds.png" )
 	soundOnBtn.width = 395;
 	soundOnBtn.height = 56;
-	soundOnBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	soundOnBtn.y = playBtn.y + 200
-	group:insert(soundOnBtn)
-	soundOnBtn:addEventListener("tap", toggleSoundBtn)
+	soundGroup:insert( soundOnBtn )
 
 	soundOffBtn = display.newImage( "images/turnOffSounds.png" )
 	soundOffBtn.width = 425;
 	soundOffBtn.height = 56;
-	soundOffBtn.x = display.screenOriginX + (display.contentWidth / 2)
-	soundOffBtn.y = playBtn.y + 200
-	group:insert(soundOffBtn)
-	soundOffBtn:addEventListener("tap", toggleSoundBtn)
+	soundGroup:insert(soundOffBtn)
+	
+	soundGroup:addEventListener("tap", toggleSoundBtn)
 
 	if myData.settings.soundOn == true then
 		soundOnBtn.alpha  = 0
@@ -112,26 +127,25 @@ function scene:createScene( event )
 		soundOffBtn.alpha = 0
 	end
 
-	local xPos = (display.screenOriginX + (display.contentWidth / 2))
-	local yPos = playBtn.y + 300
+	musicGroup = display.newGroup()
+	musicGroup.x = (display.screenOriginX + (display.contentWidth / 2))
+	musicGroup.y = playBtnGroup.y + 330
+	musicGroup:addEventListener("tap", toggleMusicBtn)
+	group:insert(musicGroup)
+
+	local rect = display.newRect(0, 0, 388, 120)
+	rect:setFillColor( 0 )
+	musicGroup:insert(rect)
+
 	musicOnBtn = display.newImage( "images/turnOnMusic.png", xPos, yPos, true )
-	--musicOnBtn.anchorX = 0
-	--musicOnBtn.anchorY = 0
 	musicOnBtn.width = 358;
 	musicOnBtn.height = 56;
-	group:insert(musicOnBtn)
-	musicOnBtn:addEventListener("tap", toggleMusicBtn)
+	musicGroup:insert(musicOnBtn)
 
-	local xPos = (display.screenOriginX + (display.contentWidth / 2))
-	local yPos = playBtn.y + 300
 	musicOffBtn = display.newImage( "images/turnOffMusic.png", xPos, yPos, true )
-	--musicOffBtn.anchorX = 0
-	--musicOffBtn.anchorY = 0
 	musicOffBtn.width = 388;
 	musicOffBtn.height = 56;
-	musicOffBtn:addEventListener("tap", toggleMusicBtn)
-	group:insert(musicOffBtn)
-
+	musicGroup:insert(musicOffBtn)
 
 	if myData.settings.musicOn == true then
 		musicOnBtn.alpha  = 0
@@ -166,7 +180,7 @@ function scene:createScene( event )
 	bestScoreLabel.y = display.contentHeight * 0.92
 	]]
 
-	group:insert( playBtn )
+	--group:insert( playBtn )
 	--group:insert( gameOverLabel )
 	group:insert( scoreLabel )
 	--group:insert( bestScoreLabel )
