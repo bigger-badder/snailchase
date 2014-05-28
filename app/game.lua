@@ -256,9 +256,9 @@ function gameLoop( event )
   mte.update()
 
   -- PLAYER MOVEMENT
-  local isGrass = mte.getTileProperties({ layer = 1, level = 1, locX = player.locX, locY = player.locY })
+  --local isGrass = mte.getTileProperties({ layer = 1, level = 1, locX = player.locX, locY = player.locY })
 
-  local accCoeff = 70
+  local accCoeff = 50
 
   if isRoad(player.locX, player.locY ) then
     accCoeff = 100
@@ -268,10 +268,10 @@ function gameLoop( event )
   local newForceY = -math.cos( math.rad(player.rotation) ) * accCoeff
 
   local diffX = newForceX - xForce 
-  xForce = xForce + (diffX / 1)
+  xForce = xForce + (diffX / 2)
   
   local diffY = newForceY - yForce
-  yForce = yForce + (diffY / 1)
+  yForce = yForce + (diffY / 2)
 
   player:applyForce(xForce, yForce, player.x, player.y)
   
