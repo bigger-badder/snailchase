@@ -258,7 +258,7 @@ function gameLoop( event )
   -- PLAYER MOVEMENT
   --local isGrass = mte.getTileProperties({ layer = 1, level = 1, locX = player.locX, locY = player.locY })
 
-  local accCoeff = 50
+  local accCoeff = 65
 
   if isRoad(player.locX, player.locY ) then
     accCoeff = 100
@@ -278,10 +278,10 @@ function gameLoop( event )
   player.rotation = player.rotation + rotationDiff
   
   if direction < 0 then
-    rotationDiff = 8
+    rotationDiff = 6
   end
   if direction > 0 then
-    rotationDiff = -8
+    rotationDiff = -6
   end
   if direction == 0 then
     rotationDiff = 0
