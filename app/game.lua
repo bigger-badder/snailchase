@@ -37,6 +37,8 @@ local scoreText                                            = nil
 local lastTileX, lastTileY                                 = 0
 local countDown                                            = 3
 local thisGroup                                            = nil
+local trophyHighScore                                      = {}
+local trophyScore                                         = {}
 local player, enemy, fight, buttonLeftOverlay, buttonRightOverlay = nil
 local restartBtn, gameOverBg, gameOverText, gameOverScore, gameOverHS = nil
 local instructionBgL, instructionBgR, instructionCD, instructionTextL, instructionTextR = nil
@@ -289,7 +291,6 @@ function gameLoop( event )
 
 
   -- ENEMY MOVEMENT
-
   enemy.y = enemy.y - 17
 
   if player.y >= enemy.y then
@@ -327,7 +328,7 @@ function displayGameOver()
 
   if(score > myData.settings.highscore) then
 
-      myData.setHighscore(myData.score)
+    myData.setHighscore(myData.score)
 
 	  gameOverScoreImg = display.newImage( 'images/newHighScore.png' )
 	  gameOverScoreImg.x = display.screenOriginX + vW / 2
@@ -352,6 +353,19 @@ function displayGameOver()
 	  })
 	  gameOverHS:setColor(256 / 256, 256 / 256, 256 / 256)
 	  gameOverHS:addDropShadow(1, 1, 1)
+
+    if score > trophies.gold then
+      trophyScore = display.newImage( "images/trophyGold.png" )
+    elseif score > trophies.silver then
+      trophyScore = display.newImage( "images/trophySilver.png" )
+    elseif score> trophies.bronze then
+      trophyScore = display.newImage( "images/trophyBronze.png" )
+    end
+
+    trophyScore.x = gameOverHS.x + ((gameOverHS.width / 2) + 50)
+    trophyScore.y = gameOverHS.y + 44
+    trophyScore.width = 120;
+    trophyScore.height = 120;
 
   else
 
@@ -396,6 +410,33 @@ function displayGameOver()
 	  })
 	  highScoreText:setColor(256 / 256, 256 / 256, 256 / 256)
 	  highScoreText:addDropShadow(1, 1, 1)
+
+    if score > trophies.gold then
+      trophyScore = display.newImage( "images/trophyGold.png" )
+    elseif score > trophies.silver then
+      trophyScore = display.newImage( "images/trophySilver.png" )
+    elseif score> trophies.bronze then
+      trophyScore = display.newImage( "images/trophyBronze.png" )
+    end
+
+    trophyScore.x = gameOverScore.x + ((gameOverScore.width / 2) + 50)
+    trophyScore.y = gameOverScore.y + 10
+    trophyScore.width = 120;
+    trophyScore.height = 120;
+
+    if myData.settings.highscore > trophies.gold then
+      trophyHighScore = display.newImage( "images/trophyGold.png" )
+    elseif myData.settings.highscore > trophies.silver then
+      trophyHighScore = display.newImage( "images/trophySilver.png" )
+    elseif myData.settings.highscore > trophies.bronze then
+      trophyHighScore = display.newImage( "images/trophyBronze.png" )
+    end
+
+    trophyHighScore.x = highScoreText.x + ((highScoreText.width / 2) + 50)
+    trophyHighScore.y = highScoreText.y + 10
+    trophyHighScore.width = 120;
+    trophyHighScore.height = 120;
+
 
   end
 

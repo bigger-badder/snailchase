@@ -12,6 +12,12 @@ local myData = require('myData')
 -- Load Corona 'ads' library
 ads = require "ads"
 
+trophies = {
+	gold = 300,
+	silver = 150,
+	bronze = 75
+}
+
 local adsClass = require('adsClass')
 local sounds = require('sounds')
 
