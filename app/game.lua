@@ -37,8 +37,8 @@ local scoreText                                            = nil
 local lastTileX, lastTileY                                 = 0
 local countDown                                            = 3
 local thisGroup                                            = nil
-local trophyHighScore                                      = {}
-local trophyScore                                         = {}
+local trophyHighScore                                      = nil
+local trophyScore                                          = nil
 local player, enemy, fight, buttonLeftOverlay, buttonRightOverlay = nil
 local restartBtn, gameOverBg, gameOverText, gameOverScore, gameOverHS = nil
 local instructionBgL, instructionBgR, instructionCD, instructionTextL, instructionTextR = nil
@@ -339,7 +339,7 @@ function displayGameOver()
 	  gameOverHS = TextCandy.CreateText({
 	    fontName     = "Mecha",             
 	    x            = display.screenOriginX + display.contentWidth / 2,            
-	    y            = gameOverScoreImg.y + 140,
+	    y            = gameOverScoreImg.y + 150,
 	    text         = score .. 'm',
 	    originX      = "CENTER",              
 	    originY      = "TOP",             
@@ -362,8 +362,8 @@ function displayGameOver()
       trophyScore = display.newImage( "images/trophyBronze.png" )
     end
 
-    trophyScore.x = gameOverHS.x + ((gameOverHS.width / 2) + 50)
-    trophyScore.y = gameOverHS.y + 44
+    trophyScore.x = gameOverScoreImg.x + 110
+    trophyScore.y = gameOverScoreImg.y + 186
     trophyScore.width = 120;
     trophyScore.height = 120;
 
@@ -377,12 +377,12 @@ function displayGameOver()
 
 	  gameOverScore = TextCandy.CreateText({
 	    fontName     = "Mecha",             
-	    x            = (display.screenOriginX + display.contentWidth / 2) + 90,            
-	    y            = gameOverScoreImg.y + 102,
+	    x            = (display.screenOriginX + display.contentWidth / 2) + 260,            
+	    y            = gameOverScoreImg.y + 114,
 	    text         = score .. 'm',  
-	    originX      = "CENTER",              
+	    originX      = "RIGHT",              
 	    originY      = "TOP",             
-	    textFlow     = "CENTER",
+	    textFlow     = "RIGHT",
 	    charSpacing  = 10,
 	    lineSpacing  = 0,
 	    wrapWidth    = 400,       
@@ -395,12 +395,12 @@ function displayGameOver()
 
 	  highScoreText = TextCandy.CreateText({
 	    fontName     = "Mecha",             
-	    x            = (display.screenOriginX + display.contentWidth / 2) + 200,            
-	    y            = gameOverScoreImg.y + 215,
+	    x            = (display.screenOriginX + display.contentWidth / 2) + 260,            
+	    y            = gameOverScoreImg.y + 227,
 	    text         = myData.settings.highscore .. 'm',  
-	    originX      = "CENTER",              
+	    originX      = "RIGHT",              
 	    originY      = "TOP",             
-	    textFlow     = "CENTER",
+	    textFlow     = "RIGHT",
 	    charSpacing  = 10,
 	    lineSpacing  = 0,
 	    wrapWidth    = 400,       
@@ -411,6 +411,7 @@ function displayGameOver()
 	  highScoreText:setColor(256 / 256, 256 / 256, 256 / 256)
 	  highScoreText:addDropShadow(1, 1, 1)
 
+    --[[
     if score > trophies.gold then
       trophyScore = display.newImage( "images/trophyGold.png" )
     elseif score > trophies.silver then
@@ -419,8 +420,8 @@ function displayGameOver()
       trophyScore = display.newImage( "images/trophyBronze.png" )
     end
 
-    trophyScore.x = gameOverScore.x + ((gameOverScore.width / 2) + 50)
-    trophyScore.y = gameOverScore.y + 10
+    trophyScore.x = gameOverScoreImg.x + ((gameOverScoreImg.width / 2) + 20)
+    trophyScore.y = gameOverScoreImg.y + 118
     trophyScore.width = 120;
     trophyScore.height = 120;
 
@@ -432,10 +433,12 @@ function displayGameOver()
       trophyHighScore = display.newImage( "images/trophyBronze.png" )
     end
 
-    trophyHighScore.x = highScoreText.x + ((highScoreText.width / 2) + 50)
-    trophyHighScore.y = highScoreText.y + 10
+    trophyHighScore.x = gameOverScoreImg.x + ((gameOverScoreImg.width / 2) + 20)
+    trophyHighScore.y = gameOverScoreImg.y + 233
     trophyHighScore.width = 120;
     trophyHighScore.height = 120;
+
+    --]]
 
 
   end
@@ -656,6 +659,12 @@ function scene:exitScene( event )
   end
   if(gameOverHS)then
   	gameOverHS:removeSelf()
+  end
+  if(trophyHighScore)then
+    trophyHighScore:removeSelf()
+  end
+  if(trophyScore)then
+    trophyScore:removeSelf()
   end
   
 end

@@ -15,7 +15,7 @@ ads = require "ads"
 trophies = {
 	gold = 300,
 	silver = 150,
-	bronze = 75
+	bronze = 5
 }
 
 local adsClass = require('adsClass')
