@@ -39,6 +39,7 @@ local countDown                                            = 3
 local thisGroup                                            = nil
 local trophyHighScore                                      = nil
 local trophyScore                                          = nil
+local trophyScore2                                         = nil
 local player, enemy, fight, buttonLeftOverlay, buttonRightOverlay = nil
 local restartBtn, gameOverBg, gameOverText, gameOverScore, gameOverHS = nil
 local instructionBgL, instructionBgR, instructionCD, instructionTextL, instructionTextR = nil
@@ -356,16 +357,23 @@ function displayGameOver()
 
     if score > trophies.gold then
       trophyScore = display.newImage( "images/trophyGold.png" )
+      trophyScore2 = display.newImage( "images/trophyGold.png" )
     elseif score > trophies.silver then
       trophyScore = display.newImage( "images/trophySilver.png" )
+      trophyScore2 = display.newImage( "images/trophySilver.png" )
     elseif score> trophies.bronze then
       trophyScore = display.newImage( "images/trophyBronze.png" )
+      trophyScore2 = display.newImage( "images/trophyBronze.png" )
     end
 
     trophyScore.x = gameOverScoreImg.x + 110
     trophyScore.y = gameOverScoreImg.y + 186
     trophyScore.width = 120;
     trophyScore.height = 120;
+    trophyScore2.x = gameOverScoreImg.x - 110
+    trophyScore2.y = gameOverScoreImg.y + 186
+    trophyScore2.width = 120;
+    trophyScore2.height = 120;
 
   else
 
