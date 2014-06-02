@@ -674,6 +674,9 @@ function scene:exitScene( event )
   if(trophyScore)then
     trophyScore:removeSelf()
   end
+  if(trophyScore2)then
+    trophyScore2:removeSelf()
+  end
   
 end
 
