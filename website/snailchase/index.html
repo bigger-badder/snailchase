@@ -13,7 +13,8 @@
 
 	<style type="text/css">
 		body {
-			background: #607848;
+			background: #113d5e url('img/bg.jpg') no-repeat center center;
+			background-attachment:fixed;
 			color: #604848;
 			font: normal 13px/150% 'Open Sans', Arial, Verdana, sans-serif;
 		}
@@ -50,7 +51,7 @@
 			text-align: center;
 			clear: both;
 			border-top: 1px solid #B9B9C8;
-			border-bottom: 1px solid #B9B9C8;
+			/*border-bottom: 1px solid #B9B9C8;*/
 			margin: 0 auto;
 			margin-top: 40px;
 			padding-top: 20px;
@@ -67,6 +68,19 @@
 			border-bottom: 1px solid #ECECFB;
 			padding-bottom: 10px;
 		}
+		#screenshots {
+			list-style: none;
+			position: relative;
+			margin-left: -20px;
+			margin-right: -20px;
+			padding: 0;
+		}
+		#screenshots li {
+			float: left;
+		}
+		#screenshots img {
+			width: 160px;
+		}
 	</style>
 </head>
 <body>
@@ -74,6 +88,13 @@
 	<img src="img/logo.png" id="logo">
 
 	<div id="container">
+		<ul id="screenshots">
+			<li><img src="img/photo5.jpg" /></li>
+			<li><img src="img/photo2.jpg" /></li>
+			<li><img src="img/photo1.jpg" /></li>
+			<li><img src="img/photo4.jpg" /></li>
+		</ul>
+		<div style="clear:both;"></div>
 		<img src="img/appicon.png" id="appicon">
 		<h1>Play Snail Chase for Free!</h1>
 		<p>For too long the garden path has been stalked by a feathery predator, but Speedy the racing snail has other plans. Plans to outrun this claw’ed beastie.</p>
@@ -85,14 +106,14 @@
 			<a href="/"><img src="img/aotas.png" id="aotas"></a><br/><br/>
 			Also coming for Windows Phone, Google Play and Amazon Appstore!
 		</p>
-		<h2>FAQ</h2>
-		<p>Coming soon.</p>
+		<!-- <h2>FAQ</h2>
+		<p>Coming soon.</p> -->
 		<!-- <p class="question">Is the gameplay really that hard?</p>
 		<p class="answer">Yes.</p> -->
 	</div>
 
 	<p style="text-align:center; color: white;">
-		&copy; 2014 <a href="http://biggerbaddergames.com">Bigger Badder Games</a> &bullet; <a href="/privacy-policy">Privacy Policy</a> &bullet; <a href="/terms-of-service">Terms of Service</a><br/><br/>
+		&copy; 2014 <a href="http://biggerbaddergames.com">Bigger Badder Games</a><!--  &bullet; <a href="/privacy-policy">Privacy Policy</a> &bullet; <a href="/terms-of-service">Terms of Service</a> --><br/><br/>
 		<img src="img/favicon.png">
 	</p>
  
