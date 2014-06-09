@@ -21,10 +21,9 @@ showAd = function( adType, object )
 end
 
 if ( system.getInfo("platformName") == "Android" ) then
-   --ads.init( "admob", "ca-app-pub-6811948289977255/8929464121", adMobListener )
+   ads.init( "admob", "ca-app-pub-6811948289977255/6890778124", adMobListener )
 else
    ads.init( "admob", "ca-app-pub-6811948289977255/8929464121", adMobListener )
-   --ads.init( "iads", "com.snail.chase", iAdsListener )
 end
 
 ads:setCurrentProvider( "admob" )
