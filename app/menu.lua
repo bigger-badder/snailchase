@@ -89,7 +89,7 @@ function scene:createScene( event )
 	group:insert(playBtnGroup)
 
 	local rect = display.newRect(0, 0, 450, 140)
-	rect:setFillColor( 0 )
+	rect:setFillColor( 0, 0.01  )
 	playBtnGroup:insert(rect)
 
 	playBtn = display.newImage( "images/newGame.png" )
@@ -100,11 +100,11 @@ function scene:createScene( event )
 
 	soundGroup = display.newGroup()
 	soundGroup.x = display.screenOriginX + (display.contentWidth / 2)
-	soundGroup.y = playBtnGroup.y + 200
+	soundGroup.y = playBtnGroup.y + 150
 	group:insert(soundGroup)
 
 	local rect = display.newRect(0, 0, 425, 120)
-	rect:setFillColor( 0 )
+	rect:setFillColor( 0 , 0.01 )
 	soundGroup:insert(rect)
 
 	soundOnBtn = display.newImage( "images/turnOnSounds.png" )
@@ -129,12 +129,12 @@ function scene:createScene( event )
 
 	musicGroup = display.newGroup()
 	musicGroup.x = (display.screenOriginX + (display.contentWidth / 2))
-	musicGroup.y = playBtnGroup.y + 330
+	musicGroup.y = playBtnGroup.y + 240
 	musicGroup:addEventListener("tap", toggleMusicBtn)
 	group:insert(musicGroup)
 
 	local rect = display.newRect(0, 0, 388, 120)
-	rect:setFillColor( 0 )
+	rect:setFillColor( 0, 0.01 )
 	musicGroup:insert(rect)
 
 	musicOnBtn = display.newImage( "images/turnOnMusic.png", xPos, yPos, true )
@@ -161,16 +161,72 @@ function scene:createScene( event )
 		y            = 0,
 		text         = 'HIGH SCORE : '.. myData.settings.highscore .. 'm',	
 		originX      = "CENTER",							
-		originY      = "TOP",							
+		originY      = "CENTER",							
 		textFlow     = "CENTER",
 		charSpacing  = 0,
 		lineSpacing  = 0,
 		wrapWidth    = display.contentWidth, 			
-		charBaseLine = "BOTTOM",
 		showOrigin 	 = false						
 	})
 	scoreLabel.x = display.screenOriginX + ( display.contentWidth * 0.5 ) 
 	scoreLabel.y = ( display.screenOriginY + display.contentHeight ) - 150
+
+
+	local trophyLeft = nil;
+	local trophyRight = nil;
+
+	if myData.settings.highscore > trophies.gold then
+
+		trophyLeft = display.newImage( "images/trophyGold.png" )
+		trophyLeft.width = 120;
+		trophyLeft.height = 120;
+		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 50)
+		trophyLeft.y = scoreLabel.y
+
+		trophyRight = display.newImage( "images/trophyGold.png" )
+		trophyRight.width = 120;
+		trophyRight.height = 120;
+		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 50)
+		trophyRight.y = scoreLabel.y
+
+	elseif myData.settings.highscore > trophies.silver then
+	
+		trophyLeft = display.newImage( "images/trophySilver.png" )
+		trophyLeft.width = 120;
+		trophyLeft.height = 120;
+		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 50)
+		trophyLeft.y = scoreLabel.y
+
+		trophyRight = display.newImage( "images/trophySilver.png" )
+		trophyRight.width = 120;
+		trophyRight.height = 120;
+		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 50)
+		trophyRight.y = scoreLabel.y
+
+	elseif myData.settings.highscore > trophies.bronze then
+
+		trophyLeft = display.newImage( "images/trophyBronze.png" )
+		trophyLeft.width = 120;
+		trophyLeft.height = 120;
+		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 50)
+		trophyLeft.y = scoreLabel.y
+
+		trophyRight = display.newImage( "images/trophyBronze.png" )
+		trophyRight.width = 120;
+		trophyRight.height = 120;
+		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 50)
+		trophyRight.y = scoreLabel.y
+
+	end
+
+	if trophyLeft then
+		group:insert( trophyLeft )	
+	end
+	
+	if trophyRight then
+		group:insert( trophyRight )	
+	end
+
 	--scoreLabel.alpha = 0
 
 	--[[
