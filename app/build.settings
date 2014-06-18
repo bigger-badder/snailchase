@@ -45,11 +45,6 @@ settings =
 
     plugins =
     {
-        ["CoronaProvider.ads.iads"] =
-        {
-            publisherId = "com.coronalabs",
-            supportedPlatforms = { iphone=true, ["iphone-sim"]=true },
-        },
         ["CoronaProvider.ads.admob"] =
         {
             publisherId = "com.coronalabs",

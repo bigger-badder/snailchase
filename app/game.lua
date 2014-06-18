@@ -41,7 +41,7 @@ local trophyHighScore                                      = nil
 local trophyScore                                          = nil
 local trophyScore2                                         = nil
 local player, enemy, fight, buttonLeftOverlay, buttonRightOverlay = nil
-local restartBtn, gameOverBg, gameOverText, gameOverScore, gameOverHS = nil
+local restartBtn, menuBtn, gameOverBg, gameOverText, gameOverScore, gameOverHS = nil
 local instructionBgL, instructionBgR, instructionCD, instructionTextL, instructionTextR = nil
 
 vW    = display.viewableContentWidth
@@ -209,16 +209,16 @@ end
 
 function move( event )
 
-  if event.phase == "ended" or event.phase == "cancelled" then
-    display.currentStage:setFocus(nil)
-    direction = 0
-    return
-  end
-
   if( event.x > display.screenOriginX + (vW/2) )then
     direction = -1
   else
     direction = 1
+  end
+
+  if event.phase == "ended" or event.phase == "cancelled" then
+    display.currentStage:setFocus(nil)
+    direction = 0
+    return
   end
 
   --[[
@@ -308,6 +308,10 @@ function restartGame()
   storyboard.gotoScene( "intermediate")
 end
 
+function gotoMenu()
+  storyboard.gotoScene( "menu")
+end
+
 function displayGameOver()
 
   gameOverBg = display.newRect( display.screenOriginX + vW / 2, display.screenOriginY + vH / 2, vW, vH )
@@ -315,10 +319,17 @@ function displayGameOver()
 
   restartBtn = display.newImage( 'images/restart.png', {width=359, height=93} )
   restartBtn.x = display.screenOriginX + vW / 2
-  restartBtn.y = (display.screenOriginY + vH)  - 250
+  restartBtn.y = (display.screenOriginY + vH)  - 350
   restartBtn.anchorX = 0.5
   restartBtn.anchorY = 0
   restartBtn:addEventListener("touch", restartGame)
+
+  menuBtn = display.newImage( 'images/menu.png', {width=359, height=93} )
+  menuBtn.x = display.screenOriginX + vW / 2
+  menuBtn.y = restartBtn.y + 120
+  menuBtn.anchorX = 0.5
+  menuBtn.anchorY = 0
+  menuBtn:addEventListener("touch", gotoMenu)
 
   gameOverText = display.newImage( 'images/gameOver.png' )
   gameOverText.x = display.screenOriginX + vW / 2
@@ -366,14 +377,20 @@ function displayGameOver()
       trophyScore2 = display.newImage( "images/trophyBronze.png" )
     end
 
-    trophyScore.x = gameOverScoreImg.x + 110
-    trophyScore.y = gameOverScoreImg.y + 186
-    trophyScore.width = 120;
-    trophyScore.height = 120;
-    trophyScore2.x = gameOverScoreImg.x - 110
-    trophyScore2.y = gameOverScoreImg.y + 186
-    trophyScore2.width = 120;
-    trophyScore2.height = 120;
+    if trophyScore then
+      trophyScore.x = gameOverScoreImg.x + 130
+      trophyScore.y = gameOverScoreImg.y + 186
+      trophyScore.width = 120;
+      trophyScore.height = 120;
+    end
+
+    if trophyScore2 then
+      trophyScore2.x = gameOverScoreImg.x - 130
+      trophyScore2.y = gameOverScoreImg.y + 186
+      trophyScore2.width = 120;
+      trophyScore2.height = 120;
+    end
+
 
   else
 

@@ -1,14 +1,14 @@
 local TextCandy = require("lib.lib_text_candy")
 -- LOAD & ADD A CHARSET
-TextCandy.AddCharset ("EXOBIG", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
-TextCandy.AddCharset ("EXOMID", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
-TextCandy.AddCharset ("EXOSMALL", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
-TextCandy.AddCharset ("MechaBitmap", "mecha", "mecha.png", "0123456789ABCDEFGHIJKLMNOPRSTUVWXYZ:!", 30)
+--TextCandy.AddCharset ("EXOBIG", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+--TextCandy.AddCharset ("EXOMID", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+--TextCandy.AddCharset ("EXOSMALL", "exo", "exo.png", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 20)
+--TextCandy.AddCharset ("MechaBitmap", "mecha", "mecha.png", "0123456789ABCDEFGHIJKLMNOPRSTUVWXYZ:!", 30)
 TextCandy.AddVectorFont("Mecha", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
 -- TextCandy.AddVectorFont("Mecha Bold", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,;:/?!", 50)
-TextCandy.ScaleCharset('MechaBitmap', 0.2)
-TextCandy.ScaleCharset('EXOMID', 0.5)
-TextCandy.ScaleCharset('EXOSMALL', 0.3)
+--TextCandy.ScaleCharset('MechaBitmap', 0.2)
+--TextCandy.ScaleCharset('EXOMID', 0.5)
+--TextCandy.ScaleCharset('EXOSMALL', 0.3)
 -- add Corona's Storyboard module
 local storyboard = require( "storyboard" )
 
@@ -22,17 +22,25 @@ local widget = require "widget"
 -- needed to remove the buttons from the scene in destroyScene
 local playBtn
 local playBtnGroup
+local highScoreGroup;
 local bestScoreLabel
 local gameOverLabel
 local scoreLabel
 
-local musicOffBtn, musicOnBtn, musicGroup, soundOnBtn, soundGroup, soundOffBtn = nil
+local musicOffBtn, musicOnBtn, musicGroup, soundOnBtn, soundGroup, soundOffBtn, highScoreBtn = nil
 
 local myData = require('myData')
 
 function startGame()
 	storyboard.gotoScene('game')
 end
+
+function showHighScores(event)
+
+	displayHighScores();
+
+end
+
 
 function toggleMusicBtn( event )
 
@@ -65,6 +73,7 @@ function toggleSoundBtn( event )
 	end
 end
 
+
 -- Called when the scene's view does not exist:
 function scene:createScene( event )
 
@@ -85,22 +94,39 @@ function scene:createScene( event )
 
 	playBtnGroup = display.newGroup()
 	playBtnGroup.x = display.screenOriginX + (display.contentWidth / 2)
-	playBtnGroup.y = display.screenOriginY + (display.contentHeight / 2) + 160
+	playBtnGroup.y = display.screenOriginY + (display.contentHeight / 2) + 80
 	group:insert(playBtnGroup)
 
 	local rect = display.newRect(0, 0, 450, 140)
 	rect:setFillColor( 0, 0.01  )
 	playBtnGroup:insert(rect)
 
-	playBtn = display.newImage( "images/newGame.png" )
-	playBtn.width = 410;
-	playBtn.height = 93;
+	playBtn = display.newImage( "images/newGameBtn.png" )
+	playBtn.width = 354;
+	playBtn.height = 86;
 	playBtnGroup:insert(playBtn)
 	playBtnGroup:addEventListener("tap", startGame)
 
+	--[[
+	highScoreGroup = display.newGroup()
+	highScoreGroup.x = playBtnGroup.x
+	highScoreGroup.y = playBtnGroup.y + 120
+	group:insert(highScoreGroup)
+
+	local rect = display.newRect(0, 0, 450, 140)
+	rect:setFillColor( 0, 0.01  )
+	highScoreGroup:insert(rect)
+
+	highScoreBtn = display.newImage( "images/highScoresBtn.png" )
+	highScoreBtn.width = 436;
+	highScoreBtn.height = 86;
+	highScoreGroup:insert(highScoreBtn)
+	highScoreGroup:addEventListener("tap", showHighScores)
+	--]]
+
 	soundGroup = display.newGroup()
 	soundGroup.x = display.screenOriginX + (display.contentWidth / 2)
-	soundGroup.y = playBtnGroup.y + 150
+	soundGroup.y = playBtnGroup.y + 120
 	group:insert(soundGroup)
 
 	local rect = display.newRect(0, 0, 425, 120)
@@ -108,13 +134,13 @@ function scene:createScene( event )
 	soundGroup:insert(rect)
 
 	soundOnBtn = display.newImage( "images/turnOnSounds.png" )
-	soundOnBtn.width = 395;
-	soundOnBtn.height = 56;
+	soundOnBtn.width = 330;
+	soundOnBtn.height = 86;
 	soundGroup:insert( soundOnBtn )
 
 	soundOffBtn = display.newImage( "images/turnOffSounds.png" )
-	soundOffBtn.width = 425;
-	soundOffBtn.height = 56;
+	soundOffBtn.width = 373;
+	soundOffBtn.height = 86;
 	soundGroup:insert(soundOffBtn)
 	
 	soundGroup:addEventListener("tap", toggleSoundBtn)
@@ -129,7 +155,7 @@ function scene:createScene( event )
 
 	musicGroup = display.newGroup()
 	musicGroup.x = (display.screenOriginX + (display.contentWidth / 2))
-	musicGroup.y = playBtnGroup.y + 240
+	musicGroup.y = soundGroup.y + 120
 	musicGroup:addEventListener("tap", toggleMusicBtn)
 	group:insert(musicGroup)
 
@@ -138,13 +164,13 @@ function scene:createScene( event )
 	musicGroup:insert(rect)
 
 	musicOnBtn = display.newImage( "images/turnOnMusic.png", xPos, yPos, true )
-	musicOnBtn.width = 358;
-	musicOnBtn.height = 56;
+	musicOnBtn.width = 320;
+	musicOnBtn.height = 86;
 	musicGroup:insert(musicOnBtn)
 
 	musicOffBtn = display.newImage( "images/turnOffMusic.png", xPos, yPos, true )
-	musicOffBtn.width = 388;
-	musicOffBtn.height = 56;
+	musicOffBtn.width = 363;
+	musicOffBtn.height = 86;
 	musicGroup:insert(musicOffBtn)
 
 	if myData.settings.musicOn == true then
@@ -169,7 +195,7 @@ function scene:createScene( event )
 		showOrigin 	 = false						
 	})
 	scoreLabel.x = display.screenOriginX + ( display.contentWidth * 0.5 ) 
-	scoreLabel.y = ( display.screenOriginY + display.contentHeight ) - 150
+	scoreLabel.y = ( display.screenOriginY + display.contentHeight ) - 50
 
 
 	local trophyLeft = nil;
@@ -180,13 +206,13 @@ function scene:createScene( event )
 		trophyLeft = display.newImage( "images/trophyGold.png" )
 		trophyLeft.width = 120;
 		trophyLeft.height = 120;
-		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 50)
+		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 90)
 		trophyLeft.y = scoreLabel.y
 
 		trophyRight = display.newImage( "images/trophyGold.png" )
 		trophyRight.width = 120;
 		trophyRight.height = 120;
-		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 50)
+		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 90)
 		trophyRight.y = scoreLabel.y
 
 	elseif myData.settings.highscore > trophies.silver then
@@ -194,13 +220,13 @@ function scene:createScene( event )
 		trophyLeft = display.newImage( "images/trophySilver.png" )
 		trophyLeft.width = 120;
 		trophyLeft.height = 120;
-		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 50)
+		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 90)
 		trophyLeft.y = scoreLabel.y
 
 		trophyRight = display.newImage( "images/trophySilver.png" )
 		trophyRight.width = 120;
 		trophyRight.height = 120;
-		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 50)
+		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 90)
 		trophyRight.y = scoreLabel.y
 
 	elseif myData.settings.highscore > trophies.bronze then
@@ -208,16 +234,25 @@ function scene:createScene( event )
 		trophyLeft = display.newImage( "images/trophyBronze.png" )
 		trophyLeft.width = 120;
 		trophyLeft.height = 120;
-		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 50)
+		trophyLeft.x = scoreLabel.x - ((scoreLabel.width / 2) + 90)
 		trophyLeft.y = scoreLabel.y
 
 		trophyRight = display.newImage( "images/trophyBronze.png" )
 		trophyRight.width = 120;
 		trophyRight.height = 120;
-		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 50)
+		trophyRight.x = scoreLabel.x + ((scoreLabel.width / 2) + 90)
 		trophyRight.y = scoreLabel.y
 
 	end
+
+
+    local highscoreBG = display.newRect( display.screenOriginX, display.screenOriginY + display.contentHeight, display.contentWidth, 110 )
+	highscoreBG.anchorX = 0;
+	highscoreBG.anchorY = 110;
+	highscoreBG:setFillColor( 0, 0.5 )
+	highscoreBG.x = display.screenOriginX;
+	highscoreBG.y = display.screenOriginY + display.contentHeight;
+	group:insert( highscoreBG )	
 
 	if trophyLeft then
 		group:insert( trophyLeft )	
@@ -240,7 +275,7 @@ function scene:createScene( event )
 	--group:insert( gameOverLabel )
 	group:insert( scoreLabel )
 	--group:insert( bestScoreLabel )
-	group:insert( scoreLabel )
+	--group:insert( scoreLabel )
 	--group:insert( gameOverLabel )
 end
 

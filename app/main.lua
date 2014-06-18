@@ -9,13 +9,15 @@ display.setDefault("magTextureFilter", "nearest")
 
 local myData = require('myData')
 
+require( "highscore" )
+
 -- Load Corona 'ads' library
 ads = require "ads"
 
 trophies = {
 	gold = 300,
 	silver = 150,
-	bronze = 5
+	bronze = 75
 }
 
 local adsClass = require('adsClass')
