@@ -309,7 +309,7 @@ function restartGame()
 end
 
 function gotoMenu()
-  storyboard.gotoScene( "menu")
+  storyboard.gotoScene( "menu", { effect="slideRight" })
 end
 
 function displayGameOver()
@@ -693,6 +693,9 @@ function scene:exitScene( event )
   end
   if(trophyScore2)then
     trophyScore2:removeSelf()
+  end
+  if(menuBtn)then
+    menuBtn:removeSelf()
   end
   
 end

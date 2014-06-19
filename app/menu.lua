@@ -296,16 +296,16 @@ function scene:enterScene(event)
 
 	ads.hide( )
 
-	if myData.gameOver == true then
+	-- if myData.gameOver == true then
 
-		gameOverLabel.alpha = 1
-		scoreLabel:setText(myData.score)
-		scoreLabel.alpha = 1
+	-- 	gameOverLabel.alpha = 1
+	-- 	scoreLabel:setText(myData.score)
+	-- 	scoreLabel.alpha = 1
 
-		if myData.score > myData.settings.highscore then
-			myData.setHighscore(myData.score)
-		end
-	end
+	-- 	if myData.score > myData.settings.highscore then
+	-- 		myData.setHighscore(myData.score)
+	-- 	end
+	-- end
 
 	scoreLabel.text = 'HIGH SCORE : '.. myData.settings.highscore .. 'm'
 end
